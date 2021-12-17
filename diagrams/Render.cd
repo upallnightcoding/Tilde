@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Leo.render.Render2DScene" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAQACAQAAAAAAAQAAAACAAIAAAAgAAEAAAAA=</HashCode>
+      <FileName>render\Render2DScene.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Leo.Entity" Collapsed="true">
+    <Position X="2.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAQAAAAAAAQAAAAgAAgAAAAAAAEAAAAA=</HashCode>
+      <FileName>entity\Entity.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="shader" />
+      <Field Name="texture" />
+      <Field Name="vao" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Leo.entity.Sprite" Collapsed="true">
+    <Position X="3.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Sprite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Leo.VAO" Collapsed="true">
+    <Position X="5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQIAAAAAIAEAAAAAAAQAAAAAUAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VAO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Leo.Shader" Collapsed="true">
+    <Position X="1.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAgAMBAAAAAAAAAAEAAISIAAAEAEAAAA=</HashCode>
+      <FileName>Shader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Leo.Texture" Collapsed="true">
+    <Position X="3.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Texture.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Leo.render.Render" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>render\Render.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
