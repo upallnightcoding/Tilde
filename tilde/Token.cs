@@ -10,12 +10,15 @@ namespace Tilde.tilde
 {
     class Token
     {
+        // Default Token Type
+        //-------------------
         private TokenType type = TokenType.UNKNOWN;
 
-        // Token Constant Values
-        private long lValue = 0;
+        // Containers for each of the possible token types
+        //------------------------------------------------
+        private long iValue = 0;
         private string sValue = null;
-        private double dValue = 0;
+        private double fValue = 0;
         private char cValue = ' ';
         private bool bValue = false;
 
@@ -26,13 +29,13 @@ namespace Tilde.tilde
         public Token(long lValue)
         {
             this.type = TokenType.INTEGER;
-            this.lValue = lValue;
+            this.iValue = lValue;
         }
 
-        public Token(double dValue)
+        public Token(double fValue)
         {
             this.type = TokenType.FLOAT;
-            this.dValue = dValue;
+            this.fValue = fValue;
         }
 
         public Token(TokenType type)
@@ -80,10 +83,10 @@ namespace Tilde.tilde
             switch(type)
             {
                 case TokenType.FLOAT:
-                    node = new NodeValue(dValue);
+                    node = new NodeValue(fValue);
                     break;
                 case TokenType.INTEGER:
-                    node = new NodeValue(lValue);
+                    node = new NodeValue(iValue);
                     break;
                 case TokenType.STRING:
                     node = new NodeValue(sValue);
@@ -108,10 +111,10 @@ namespace Tilde.tilde
             switch(type)
             {
                 case TokenType.FLOAT:
-                    Console.WriteLine($"Type: {type} Value: {dValue}");
+                    Console.WriteLine($"Type: {type} Value: {fValue}");
                     break;
                 case TokenType.INTEGER:
-                    Console.WriteLine($"Type: {type} Value: {lValue}");
+                    Console.WriteLine($"Type: {type} Value: {iValue}");
                     break;
                 case TokenType.STRING:
                     Console.WriteLine($"Type: {type} Value: {sValue}");

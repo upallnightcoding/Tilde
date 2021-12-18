@@ -38,6 +38,21 @@ namespace Tilde.tilde.commands
         /*** Protected Functions ***/
         /***************************/
 
+        /// <summary>
+        /// GetNode() - Return a node from a given index in the nodelist.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        protected Node GetNode(int index)
+        {
+            return (nodeList.ElementAt(index));
+        }
+
+        /// <summary>
+        /// GetNodeList() - Return the entire node list, this is mainly 
+        /// used for looping through each element in the node list.
+        /// </summary>
+        /// <returns></returns>
         protected List<Node> GetNodeList()
         {
             return (nodeList);

@@ -1,9 +1,5 @@
-﻿using Tilde.tilde.commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using Tilde.tilde.commands;
 
 namespace Tilde.tilde.nodes
 {
@@ -14,21 +10,25 @@ namespace Tilde.tilde.nodes
     /// </summary>
     class NodeValue : Node
     {
-        private long lValue = 0;
+        // Containers for each Tilde primitive type
+        //-----------------------------------------
+        private long iValue = 0;
         private string sValue = null;
-        private double dValue = 0;
+        private double fValue = 0;
         private char cValue = ' ';
         private bool bValue = false;
 
+        // Default NodeValue Type
+        //-----------------------
         VariableType type = VariableType.UNKNOWN;
 
         /*******************/
         /*** Constructor ***/
         /*******************/
 
-        public NodeValue(long lValue)
+        public NodeValue(long iValue)
         {
-            this.lValue = lValue;
+            this.iValue = iValue;
             this.type = VariableType.INTEGER;
         }
 
@@ -38,26 +38,37 @@ namespace Tilde.tilde.nodes
             this.type = VariableType.STRING;
         }
 
-        public NodeValue(double dValue)
+        public NodeValue(double fValue)
         {
-            this.dValue = dValue;
+            this.fValue = fValue;
             this.type = VariableType.FLOAT;    
         }
+
+        /***************************/
+        /*** Predicate Functions ***/
+        /***************************/
+
+        public bool IsFloat() => type == VariableType.FLOAT;
+
+        public bool IsInteger() => type == VariableType.INTEGER;
+
+        public bool IsString() => type == VariableType.STRING;
 
         /****************************/
         /*** Conversion Functions ***/
         /****************************/
 
-        /*
-         * Conversion Functions - The following functions are used to convert
-         * the current node type to any require destination type.
-         */
-
+        /// <summary>
+        /// GetString() - Returns the value of th NodeValue as a Tilde String.
+        /// </summary>
+        /// <returns></returns>
         public string GetString()
         {
             string value = null;
 
-            switch(type)
+            // Determine the type of the NodeValue
+            //------------------------------------
+            switch (type)
             {
                 case VariableType.CHARACTER:
                     value = char.ToString(cValue);
@@ -66,10 +77,10 @@ namespace Tilde.tilde.nodes
                     value = sValue;
                     break;
                 case VariableType.INTEGER:
-                    value = lValue.ToString();
+                    value = iValue.ToString();
                     break;
                 case VariableType.FLOAT:
-                    value = dValue.ToString();
+                    value = fValue.ToString();
                     break;
                 case VariableType.BOOLEAN:
                     value = (bValue) ? "true" : "false";
@@ -79,17 +90,46 @@ namespace Tilde.tilde.nodes
             return (value);
         }
 
+        /// <summary>
+        /// GetFloat() - Returns the value of th NodeValue as a Tilde Float.
+        /// </summary>
+        /// <returns></returns>
         public double GetFloat()
         {
             double value = 0;
 
+            // Determine the type of the NodeValue
+            //------------------------------------
             switch(type)
             {
                 case VariableType.FLOAT:
-                    value = dValue;
+                    value = fValue;
                     break;
                 case VariableType.INTEGER:
-                    value = lValue;
+                    value = iValue;
+                    break;
+            }
+
+            return (value);
+        }
+
+        /// <summary>
+        /// GetIntger() - Returns the value of NodeValue as a Tilde Integer.
+        /// </summary>
+        /// <returns></returns>
+        public long GetInteger()
+        {
+            long value = 0;
+
+            // Determine the type of the NodeValue
+            //------------------------------------
+            switch (type)
+            {
+                case VariableType.FLOAT:
+                    value = Convert.ToInt64(fValue);
+                    break;
+                case VariableType.INTEGER:
+                    value = iValue;
                     break;
             }
 

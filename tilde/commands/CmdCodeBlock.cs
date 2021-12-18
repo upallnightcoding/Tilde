@@ -3,12 +3,19 @@
 namespace Tilde.tilde.commands
 {
     /// <summary>
-    /// CmdCodeBlock - 
+    /// CmdCodeBlock - This class manages the parsing of a codeblock. A
+    /// code block is any set of commands that are between a left and
+    /// right brace.  Code blocks can be indented with each indentation
+    /// creating a nested code block node.
+    /// 
+    /// BNF:
+    /// <CodeBlock> = { <Commands> }
+    /// 
     /// </summary>
     class CmdCodeBlock : Cmd
     {
         /// <summary>
-        /// GetCommand() - 
+        /// GetCommand() - This function is not a command
         /// </summary>
         /// <returns></returns>
         public override string GetCommand()
@@ -17,7 +24,9 @@ namespace Tilde.tilde.commands
         }
 
         /// <summary>
-        /// Interpret() - 
+        /// Translate() - Starts reading a code block by parsing the first
+        /// left brace and then recursively reading each code block.  This
+        /// function only ready one code block at the current level.
         /// </summary>
         /// <param name="parser"></param>
         /// <returns></returns>
@@ -37,64 +46,55 @@ namespace Tilde.tilde.commands
         /// </summary>
         /// <param name="parser"></param>
         /// <returns></returns>
-        private Node xxParseCodeBlock(Parser parser)
+        private Node ParseCodeBlock(Parser parser)
         {
+            // Create a code block for this level of indentation
+            //--------------------------------------------------
             NodeCodeBlock codeBlock = new NodeCodeBlock();
 
             Token token = parser.GetToken();
 
-            do
-            {
-                Cmd command = CmdFactory.INSTANCE.GetCommand(token);
+            Cmd command = CmdFactory.INSTANCE.GetCommand(token);
 
+            // Loop until the end of the code block
+            //-------------------------------------
+            while (!(EndOfCodeBlock(token)))
+            {
                 Node node = command.Translate(parser);
 
                 codeBlock.Add(node);
 
                 token = parser.GetToken();
 
+                // Create a new code block for a new level of indentation
+                //-------------------------------------------------------
                 if (token.IsLeftBrace())
                 {
                     codeBlock.Add(ParseCodeBlock(parser));
-                    token = parser.GetToken();
-                }
-                else if (!token.IsEOC() && !token.IsRightBrace())
+                }   
+
+                // If not the end of code block continue reading commands
+                //-------------------------------------------------------
+                else if (!EndOfCodeBlock(token))
                 {
                     command = CmdFactory.INSTANCE.GetCommand(token);
-                }
-
-            } while (!token.IsEOC() && !token.IsRightBrace());
-
-            return (codeBlock);
-        }
-
-        private Node ParseCodeBlock(Parser parser)
-        {
-            NodeCodeBlock codeBlock = new NodeCodeBlock();
-
-            Token keyWord = parser.GetToken();
-
-            Cmd command = CmdFactory.INSTANCE.GetCommand(keyWord);
-
-            while (!keyWord.IsEOC() && !keyWord.IsRightBrace())
-            {
-                Node node = command.Translate(parser);
-
-                codeBlock.Add(node);
-
-                keyWord = parser.GetToken();
-
-                if (keyWord.IsLeftBrace())
-                {
-                    codeBlock.Add(ParseCodeBlock(parser));
-                }
-                else if (!keyWord.IsEOC() && !keyWord.IsRightBrace())
-                {
-                    command = CmdFactory.INSTANCE.GetCommand(keyWord);
                 }
             }
 
             return (codeBlock);
         }
+
+        /// <summary>
+        /// EndOfCodeBlock() - Returns true if the token has reached the end of
+        /// the source code or has found a right brace.  The EOC would single 
+        /// that there are no more source code lineto parse.  And the 
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        private bool EndOfCodeBlock(Token token)
+        {
+            return (token.IsEOC() || token.IsRightBrace());
+        }
     }
+
 }

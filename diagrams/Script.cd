@@ -1,32 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Leo.script.CmdPrint" Collapsed="true">
-    <Position X="2.75" Y="1" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>script\scriptcommand\CmdPrint.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Leo.script.command.CmdProgram" Collapsed="true">
-    <Position X="0.5" Y="1" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>script\scriptcommand\CmdProgram.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Leo.script.command.Node">
-    <Position X="4.5" Y="4.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAIAAAAAAAAAAAQAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>script\scriptnode\Node.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Leo.script.scriptnode.NodePrint">
-    <Position X="4.5" Y="3" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>script\scriptnode\NodePrint.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

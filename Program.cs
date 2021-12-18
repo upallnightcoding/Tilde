@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using Tilde.tilde;
 
 namespace Tilde
 {
@@ -25,15 +26,15 @@ namespace Tilde
             SourceCode source = new SourceCode();
             
             source.Add(" program test {");
-            source.Add("    print 87, 456, 789.987;");
+            source.Add("    print 87, \" \",456, \" \",789.987;");
             source.Add("    {");
-            source.Add("        print \"Line 1\", 987.765 ;");
-            source.Add("        print 1, 2, 3, 4 ;");
+            source.Add("        print \"Line 1 \", 987.765 ;");
+            source.Add("        print 1, \" \", 2, \" \",3, \" \",4 ;");
             source.Add("    }");
-            source.Add("    print 0.098, \"Line 2\", 987.765 ;");
+            source.Add("    print 0.098, \" Line 2 \", 987.765 ;");
             source.Add("}");
 
-            tilde.Tilde tilde = new tilde.Tilde(source);
+            TildeScript tilde = new TildeScript(source);
 
             tilde.Execute();
         }

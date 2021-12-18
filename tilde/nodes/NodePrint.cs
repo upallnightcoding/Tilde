@@ -16,10 +16,10 @@ namespace Tilde.tilde.nodes
         {
             foreach(Node node in GetNodeList())
             {
-                Console.WriteLine("Value: " + ((NodeValue)node).GetString());
+                Console.Write(((NodeValue)node).GetString());
             }
 
-            Console.WriteLine("-------------");
+            Console.WriteLine("");
 
             return (null);
         }

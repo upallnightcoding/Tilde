@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Tilde.tilde
 {
-    class Tilde
+    class TildeScript
     {
         private SourceCode source = null;
 
-        public Tilde(SourceCode source)
+        public TildeScript(SourceCode source)
         {
             this.source = source;
         }

@@ -68,7 +68,9 @@
     <Compile Include="tilde\commands\CmdCodeBlock.cs" />
     <Compile Include="tilde\commands\CmdPrint.cs" />
     <Compile Include="tilde\commands\Cmd.cs" />
+    <Compile Include="tilde\Expression.cs" />
     <Compile Include="tilde\nodes\Node.cs" />
+    <Compile Include="tilde\nodes\NodeSubtract.cs" />
     <Compile Include="tilde\nodes\NodeCodeBlock.cs" />
     <Compile Include="tilde\nodes\NodePrint.cs" />
     <Compile Include="tilde\nodes\NodeValue.cs" />
@@ -80,7 +82,7 @@
     <Compile Include="render\RenderWindow.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="tilde\Tilde.cs" />
+    <Compile Include="tilde\TildeScript.cs" />
     <Compile Include="tilde\Token.cs" />
     <Compile Include="tilde\TokenType.cs" />
     <Compile Include="tilde\VariableType.cs" />
