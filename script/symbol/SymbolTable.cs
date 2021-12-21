@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Leo.tilde
+namespace Leo.script.symbol
 {
-    class Expression
+    class SymbolTable
     {
+
     }
 }

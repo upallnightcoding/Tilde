@@ -1,10 +1,8 @@
-﻿using System;
+﻿using Leo.script.commands;
+using Leo.script.commands.declare;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Tilde.tilde
+namespace Tilde.script
 {
     class CmdFactory
     {
@@ -16,19 +14,29 @@ namespace Tilde.tilde
         {
             commandMap = new Dictionary<string, Cmd>();
 
-            InstallCmd(new CmdPrint());
+            InstallCmd();
         }
 
         public Cmd GetCommand(Token keyword)
         {
             Cmd cmd = null;
 
-            if (commandMap.TryGetValue(keyword.getKeyword().ToUpper(), out cmd))
+            if (commandMap.TryGetValue(keyword.GetKeyword().ToUpper(), out cmd))
             {
                 // Do nothing ...
             }
 
             return (cmd);
+        }
+
+        private void InstallCmd()
+        {
+            InstallCmd(new CmdPrint());
+            InstallCmd(new CmdInteger());
+            InstallCmd(new CmdBoolean());
+            InstallCmd(new CmdCharacter());
+            InstallCmd(new CmdFloat());
+            InstallCmd(new CmdString());
         }
 
         private void InstallCmd(Cmd command)

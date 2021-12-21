@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tilde.tilde.commands;
-using Tilde.tilde.nodes;
+﻿using Leo.script.commands;
+using Tilde.script.commands;
 
-namespace Leo.tilde.nodes
+namespace Tilde.script.nodes
 {
     class NodeSubtract : Node
     {
@@ -22,12 +17,12 @@ namespace Leo.tilde.nodes
         /// on the type of the node values.
         /// </summary>
         /// <returns></returns>
-        public override NodeValue Execute()
+        public override NodeValue Execute(Context context)
         {
             NodeValue value = null;
 
-            NodeValue vLeft = ((NodeValue) GetNode(0)).Execute();
-            NodeValue vRight = ((NodeValue) GetNode(1)).Execute();
+            NodeValue vLeft = (NodeValue) (GetNode(0).Execute(context));
+            NodeValue vRight = (NodeValue) (GetNode(1).Execute(context));
 
             if (vLeft.IsFloat() && vRight.IsFloat())
             {

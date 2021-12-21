@@ -1,11 +1,12 @@
-﻿using Tilde.tilde.commands;
+﻿using Tilde.script.commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Leo.script.commands;
 
-namespace Tilde.tilde
+namespace Tilde.script
 {
     class TildeScript
     {
@@ -28,7 +29,9 @@ namespace Tilde.tilde
 
             Node node = codeBlock.Translate(parser);
 
-            node.Execute();
+            Context context = new Context();
+
+            node.Execute(context);
         }
     }
 }

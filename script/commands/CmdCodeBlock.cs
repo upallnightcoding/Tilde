@@ -1,6 +1,6 @@
-﻿using Tilde.tilde.nodes;
+﻿using Tilde.script.nodes;
 
-namespace Tilde.tilde.commands
+namespace Tilde.script.commands
 {
     /// <summary>
     /// CmdCodeBlock - This class manages the parsing of a codeblock. A
@@ -14,13 +14,9 @@ namespace Tilde.tilde.commands
     /// </summary>
     class CmdCodeBlock : Cmd
     {
-        /// <summary>
-        /// GetCommand() - This function is not a command
-        /// </summary>
-        /// <returns></returns>
-        public override string GetCommand()
+        public CmdCodeBlock() : base(null)
         {
-            return (null);
+
         }
 
         /// <summary>

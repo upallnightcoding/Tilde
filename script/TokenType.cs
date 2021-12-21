@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tilde.tilde
+namespace Tilde.script
 {
     public enum TokenType
     {
@@ -15,6 +15,15 @@ namespace Tilde.tilde
         STRING,
         BOOLEAN,
         CHARACTER,
+
+        OPER_STACK_MARKER,          // Used to mark the end of the expression operator stack
+        BEGIN_EXP_MARKER,
+
+        EOE,
+        MULTIPLY,
+        DIVIDE,
+        SUBTRACT,
+        ADD,
 
         OPERATOR,
         KEYWORD,

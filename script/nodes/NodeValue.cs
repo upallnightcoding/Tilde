@@ -1,7 +1,8 @@
-﻿using System;
-using Tilde.tilde.commands;
+﻿using Leo.script.commands;
+using System;
+using Tilde.script.commands;
 
-namespace Tilde.tilde.nodes
+namespace Tilde.script.nodes
 {
     /// <summary>
     /// NodeValue - This class defines the computational values calculated
@@ -136,9 +137,9 @@ namespace Tilde.tilde.nodes
             return (value);
         }
 
-        public override NodeValue Execute()
+        public override NodeValue Execute(Context context)
         {
-            return (null);
+            return (this);
         }
     }
 }

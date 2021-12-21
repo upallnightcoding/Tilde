@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tilde.tilde
+namespace Tilde.script
 {
     class Parser
     {
@@ -85,11 +85,25 @@ namespace Tilde.tilde
             return (Token.CreateCharToken(character));
         }
 
+        /// <summary>
+        /// CreateSimpleTokens() - Creates the simple one character tokens that
+        /// are used by the scripting language.  If these tokens are used in 
+        /// combination with any other token, then it is NOT considered
+        /// simple.
+        /// </summary>
         private void CreateSimpleTokens()
         {
             simpleTokens = new Dictionary<char, TokenType>
             {
                 [','] = TokenType.FIELD_SEPARATOR,
+
+                // Operator Tokens
+                //----------------
+                ['+'] = TokenType.ADD,
+                ['-'] = TokenType.SUBTRACT,
+                ['*'] = TokenType.MULTIPLY,
+                ['/'] = TokenType.DIVIDE,
+
                 [';'] = TokenType.EOS,
                 ['('] = TokenType.LEFT_PAREN,
                 [')'] = TokenType.RIGHT_PAREN,

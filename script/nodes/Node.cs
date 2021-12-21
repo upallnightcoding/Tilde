@@ -1,17 +1,15 @@
-﻿using Tilde.tilde.nodes;
-using System;
+﻿using Tilde.script.nodes;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Leo.script.commands;
 
-namespace Tilde.tilde.commands
+namespace Tilde.script.commands
 {
     abstract class Node
     {
         private List<Node> nodeList = null;
 
-        public abstract NodeValue Execute();
+        public abstract NodeValue Execute(Context context);
 
         /*******************/
         /*** Constructor ***/
