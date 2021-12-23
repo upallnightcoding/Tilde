@@ -1,4 +1,5 @@
 ﻿using Leo.script.commands;
+using Leo.script.symbol;
 using System;
 using Tilde.script.commands;
 
@@ -19,6 +20,8 @@ namespace Tilde.script.nodes
         private char cValue = ' ';
         private bool bValue = false;
 
+        private bool isAVariable = false;
+
         // Default NodeValue Type
         //-----------------------
         VariableType type = VariableType.UNKNOWN;
@@ -33,10 +36,21 @@ namespace Tilde.script.nodes
             this.type = VariableType.INTEGER;
         }
 
-        public NodeValue(string sValue)
+        public NodeValue(string sValue, VariableType type = VariableType.STRING)
         {
             this.sValue = sValue;
-            this.type = VariableType.STRING;
+
+            switch(type)
+            {
+                case VariableType.STRING:
+                    this.type = type;
+                    this.isAVariable = false;
+                    break;
+                case VariableType.VARIABLE:
+                    this.type = VariableType.UNKNOWN;
+                    this.isAVariable = true;
+                    break;
+            }
         }
 
         public NodeValue(double fValue)
@@ -45,15 +59,27 @@ namespace Tilde.script.nodes
             this.type = VariableType.FLOAT;    
         }
 
+        public NodeValue(char cValue)
+        {
+            this.cValue = cValue;
+            this.type = VariableType.CHARACTER;
+        }
+
+        public NodeValue(bool bValue)
+        {
+            this.bValue = bValue;
+            this.type = VariableType.BOOLEAN;
+        }
+
         /***************************/
         /*** Predicate Functions ***/
         /***************************/
 
-        public bool IsFloat() => type == VariableType.FLOAT;
+        public bool IsFloat() => (type == VariableType.FLOAT);
 
-        public bool IsInteger() => type == VariableType.INTEGER;
+        public bool IsInteger() => (type == VariableType.INTEGER);
 
-        public bool IsString() => type == VariableType.STRING;
+        public bool IsString() => (type == VariableType.STRING);
 
         /****************************/
         /*** Conversion Functions ***/
@@ -139,7 +165,38 @@ namespace Tilde.script.nodes
 
         public override NodeValue Execute(Context context)
         {
-            return (this);
+            NodeValue value = this;
+
+            if (isAVariable)
+            {
+                SymbolTableRec record = context.GetSymbolTable().Find(sValue);
+
+                int offset = 0;
+
+                if (record != null)
+                {
+                    switch (record.Type)
+                    {
+                        case VariableType.CHARACTER:
+                            cValue = record.GetChar(offset);
+                            break;
+                        case VariableType.STRING:
+                            sValue = record.GetString(offset);
+                            break;
+                        case VariableType.INTEGER:
+                            iValue = record.GetInteger(offset);
+                            break;
+                        case VariableType.FLOAT:
+                            fValue = record.GetFloat(offset);
+                            break;
+                        case VariableType.BOOLEAN:
+                            bValue = record.GetBool(offset);
+                            break;
+                    }
+                }
+            }
+
+            return (value);
         }
     }
 }

@@ -31,18 +31,18 @@ namespace Tilde.script
         {
             Token lastExpToken = Token.CreateBeginExpMarker();
 
-            NodePrint nodePrint = new NodePrint();
+            NodePrint printNode = new NodePrint();
 
             while (!lastExpToken.IsEOS())
             {
                 Node node = expression.Translate(parser);
 
-                nodePrint.Add(node);
+                printNode.Add(node);
 
                 lastExpToken = expression.LastToken;
             }
 
-            return (nodePrint);
+            return (printNode);
         }
     }
 }

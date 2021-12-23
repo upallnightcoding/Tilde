@@ -14,6 +14,8 @@ namespace Tilde.script
         CHARACTER,
         BOOLEAN,
 
+        VARIABLE,
+
         UNKNOWN
     }
 }

@@ -2,19 +2,19 @@
 
 namespace Leo.script.symbol
 {
-    class SymbolScope
+    class ScopeLevels
     {
         // Variables declared in the current scope
         //----------------------------------------
-        List<SymbolTableRec> variables = null;
+        private Dictionary<string, SymbolTableRec> variables = null;
 
         /*******************/
         /*** Constructor ***/
         /*******************/
 
-        public SymbolScope()
+        public ScopeLevels()
         {
-            variables = new List<SymbolTableRec>();
+            variables = new Dictionary<string, SymbolTableRec>();
         }
 
         /************************/
@@ -29,7 +29,7 @@ namespace Leo.script.symbol
         {
             if (record != null)
             {
-                variables.Add(record);
+                variables[record.Variable] = record;
             }
         }
 
@@ -41,6 +41,11 @@ namespace Leo.script.symbol
         public SymbolTableRec Find(string variable)
         {
             SymbolTableRec record = null;
+
+            if(!variables.TryGetValue(variable, out record))
+            {
+                record = null;
+            }
 
             return (record);
         }

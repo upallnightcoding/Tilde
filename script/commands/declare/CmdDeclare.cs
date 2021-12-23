@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Leo.script.nodes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,30 +14,38 @@ namespace Leo.script.commands.declare
     /// </summary>
     class CmdDeclare : Cmd
     {
-        private VariableType currentType = VariableType.UNKNOWN;
+        private VariableType type = VariableType.UNKNOWN;
 
         public CmdDeclare(string command) : base(command)
         {
             Token token = Token.CreateKeyWordToken(command);
 
-            currentType = token.GetVariableType();
+            type = token.GetVariableType();
         }
+
+        /************************/
+        /*** Public Functions ***/
+        /************************/
 
         public override Node Translate(Parser parser)
         {
-            Node node = null;
+            NodeDeclare nodeDeclare = new NodeDeclare(type);
 
-            Token token = parser.GetToken();
+            Token variable = parser.GetToken();
 
-            while (!token.IsEOS())
+            while (!variable.IsEOS())
             {
-                DeclareVariable(currentType, token);
+                nodeDeclare.Add(new NodeDeclareVar(type, variable));
 
-                token = ReadNextToken(parser); 
+                variable = ReadNextToken(parser); 
             }
 
-            return (node);
+            return (nodeDeclare);
         }
+
+        /*************************/
+        /*** Private Functions ***/
+        /*************************/
 
         private Token ReadNextToken(Parser parser)
         {
@@ -48,44 +57,6 @@ namespace Leo.script.commands.declare
             }
 
             return (token);
-        }
-
-        private void DeclareVariable(VariableType type, Token token)
-        {
-            Console.WriteLine("Type: " + type + " " + token.GetVariable());
-        }
-
-        private bool IsTokenAType(Token token)
-        {
-            VariableType newType = VariableType.UNKNOWN;
-
-            switch(token.GetKeyword())
-            {
-                case "INTEGER":
-                    newType = VariableType.INTEGER;
-                    break;
-                case "FLOAT":
-                    newType = VariableType.FLOAT;
-                    break;
-                case "BOOLEAN":
-                    newType = VariableType.BOOLEAN;
-                    break;
-                case "STRING":
-                    newType = VariableType.STRING;
-                    break;
-                case "CHARACTER":
-                    newType = VariableType.CHARACTER;
-                    break;
-            }
-
-            bool setNewType = newType != VariableType.UNKNOWN;
-
-            if (setNewType)
-            {
-                currentType = newType;
-            }
-
-            return (setNewType);
         }
     }
 }

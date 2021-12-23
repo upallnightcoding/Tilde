@@ -79,6 +79,7 @@
     <Compile Include="script\nodes\Node.cs" />
     <Compile Include="script\nodes\NodeAdd.cs" />
     <Compile Include="script\nodes\NodeDeclare.cs" />
+    <Compile Include="script\nodes\NodeDeclareVar.cs" />
     <Compile Include="script\nodes\NodeDivide.cs" />
     <Compile Include="script\nodes\NodeMultiply.cs" />
     <Compile Include="script\nodes\NodeSubtract.cs" />
@@ -93,7 +94,7 @@
     <Compile Include="render\RenderWindow.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="script\symbol\SymbolScope.cs" />
+    <Compile Include="script\symbol\ScopeLevels.cs" />
     <Compile Include="script\symbol\SymbolTable.cs" />
     <Compile Include="script\symbol\SymbolTableRec.cs" />
     <Compile Include="script\TildeScript.cs" />

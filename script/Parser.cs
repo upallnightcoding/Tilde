@@ -133,23 +133,26 @@ namespace Tilde.script
         }
 
         /// <summary>
-        /// GetKeyWord() - 
+        /// GetKeyWord() - Parses a keyword token.  A Keyword token begins 
+        /// with a letter and follows with any combination of letter or 
+        /// digits.  A "_" can be used to define a variable name, but it
+        /// can not be the first character of the name.
         /// </summary>
         /// <returns></returns>
         private Token GetKeyWord()
         {
-            StringBuilder value = new StringBuilder();
+            StringBuilder keyword = new StringBuilder();
 
             char character = PeekChar();
 
-            while (NotEoc() && IsLetter(character)) 
+            while (NotEoc() && (IsAlphaNumeric(character))) 
             {
-                value.Append(character);
+                keyword.Append(character);
 
                 character = GetNextChar();
             }
 
-            return (Token.CreateKeyWordToken(value.ToString()));
+            return (Token.CreateKeyWordToken(keyword.ToString()));
         }
 
         /// <summary>
@@ -331,6 +334,8 @@ namespace Tilde.script
         private bool IsDigit(char character) => char.IsDigit(character);
 
         private bool IsLetter(char character) => char.IsLetter(character);
+
+        private bool IsAlphaNumeric(char character) => char.IsLetterOrDigit(character);
 
         private bool NotEoc() => !source.Eoc();
 

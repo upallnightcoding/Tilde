@@ -1,34 +1,36 @@
 ﻿using Leo.script.commands;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tilde.script;
 using Tilde.script.commands;
 using Tilde.script.nodes;
 
 namespace Leo.script.nodes
 {
-    class NodeDeclare : Node
+    class NodeDeclareVar : Node
     {
+        private string variable = null;
+
         private VariableType type = VariableType.UNKNOWN;
 
         /*******************/
         /*** Constructor ***/
         /*******************/
 
-        public NodeDeclare(VariableType type)
+        public NodeDeclareVar(VariableType type, Token variable)
         {
             this.type = type;
+            this.variable = variable.GetVariable();
         }
+
+        /************************/
+        /*** Public Functions ***/
+        /************************/
 
         public override NodeValue Execute(Context context)
         {
-            foreach (Node node in GetNodeList())
-            {
-                node.Execute(context);
-            }
+            context.GetSymbolTable().Declare(type, variable, 1);
+
+            Console.WriteLine("Type: " + type + " - Variable: " + variable);
 
             return (null);
         }

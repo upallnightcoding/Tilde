@@ -31,7 +31,7 @@ namespace Tilde.script
 
             while(!EndOfExpression(token))
             {
-                if (token.IsAConstant())
+                if (token.IsAConstant() || token.IsAKeyWord())
                 {
                     PushVarStack(token);
                 } 
@@ -98,6 +98,9 @@ namespace Tilde.script
             operStack.Pop();
         }
 
+        /// <summary>
+        /// PopOperStack() - 
+        /// </summary>
         private void PopOperStack()
         {
             Node rValue = varStack.Pop();
@@ -108,11 +111,20 @@ namespace Tilde.script
             varStack.Push(oper.CreateNodeOperator(lValue, rValue));
         }
 
+        /// <summary>
+        /// PushVarStack() - 
+        /// </summary>
+        /// <param name="token"></param>
         private void PushVarStack(Token token)
         {
             varStack.Push(token.CreateNodeValue());
         }
 
+        /// <summary>
+        /// EndOfExpression() - 
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
         private bool EndOfExpression(Token token)
         {
             return (token.IsComma() || token.IsEOS());

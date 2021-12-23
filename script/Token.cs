@@ -62,7 +62,9 @@ namespace Tilde.script
         }
 
         /// <summary>
-        /// GetKeyword() - Returns the string as a Script keyword
+        /// GetKeyword() - Returns the string as a Script keyword.  Keywords
+        /// are converted to upper case for comparison.  Keywords are not
+        /// case sensitive.
         /// </summary>
         /// <returns></returns>
         public string GetKeyword()
@@ -71,7 +73,9 @@ namespace Tilde.script
         }
 
         /// <summary>
-        /// GetVariable() - 
+        /// GetVariable() - Returns the string as a Script variable.  Since
+        /// variables are case sensitive, they are not converted to uppercase
+        /// while doing comparisons.  
         /// </summary>
         /// <returns></returns>
         public string GetVariable()
@@ -177,6 +181,15 @@ namespace Tilde.script
                 case TokenType.STRING:
                     node = new NodeValue(sValue);
                     break;
+                case TokenType.CHARACTER:
+                    node = new NodeValue(cValue);
+                    break;
+                case TokenType.BOOLEAN:
+                    node = new NodeValue(bValue);
+                    break;
+                case TokenType.KEYWORD:
+                    node = new NodeValue(sValue, VariableType.VARIABLE);
+                    break;
             }
 
             return (node);
@@ -226,6 +239,8 @@ namespace Tilde.script
         public bool IsLeftParen() => (type == TokenType.LEFT_PAREN);
 
         public bool IsRightParen() => (type == TokenType.RIGHT_PAREN);
+
+        public bool IsAKeyWord() => (type == TokenType.KEYWORD);
 
         public bool IsOperator()
         {
