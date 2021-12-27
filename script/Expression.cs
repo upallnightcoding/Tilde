@@ -4,15 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tilde.script.commands;
+using Tilde.script.nodes;
 
 namespace Tilde.script
 {
     class Expression
     {
+        public Token LastToken { get; set; } = null;
+
         private Stack<Node> varStack = null;
         private Stack<Token> operStack = null;
 
-        public Token LastToken { get; set; } = null;
+        /*******************/
+        /*** Constructor ***/
+        /*******************/
 
         public Expression()
         {

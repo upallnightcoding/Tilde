@@ -3,8 +3,11 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using PixelFormat = OpenTK.Graphics.OpenGL4.PixelFormat;
 
-namespace Tilde
+namespace Tilde.render.entity
 {
+    /// <summary>
+    /// Texture - 
+    /// </summary>
     public class Texture
     {
         public readonly int Handle;

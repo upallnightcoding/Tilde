@@ -20,11 +20,11 @@ namespace Tilde.script.nodes
         private char cValue = ' ';
         private bool bValue = false;
 
-        private bool isAVariable = false;
-
         // Default NodeValue Type
         //-----------------------
-        VariableType type = VariableType.UNKNOWN;
+        private VariableType type = VariableType.UNKNOWN;
+
+        private bool isAKeyWord = false;
 
         /*******************/
         /*** Constructor ***/
@@ -36,7 +36,7 @@ namespace Tilde.script.nodes
             this.type = VariableType.INTEGER;
         }
 
-        public NodeValue(string sValue, VariableType type = VariableType.STRING)
+        public NodeValue(string sValue, VariableType type)
         {
             this.sValue = sValue;
 
@@ -44,11 +44,10 @@ namespace Tilde.script.nodes
             {
                 case VariableType.STRING:
                     this.type = type;
-                    this.isAVariable = false;
                     break;
-                case VariableType.VARIABLE:
-                    this.type = VariableType.UNKNOWN;
-                    this.isAVariable = true;
+                case VariableType.KEYWORD:
+                    this.type = type;
+                    this.isAKeyWord = true;
                     break;
             }
         }
@@ -153,7 +152,7 @@ namespace Tilde.script.nodes
             switch (type)
             {
                 case VariableType.FLOAT:
-                    value = Convert.ToInt64(fValue);
+                    value = (long) fValue;
                     break;
                 case VariableType.INTEGER:
                     value = iValue;
@@ -163,19 +162,31 @@ namespace Tilde.script.nodes
             return (value);
         }
 
+        public char GetChar()
+        {
+            return (cValue);
+        }
+
+        public bool GetBoolean()
+        {
+            return (bValue);
+        }
+
         public override NodeValue Execute(Context context)
         {
             NodeValue value = this;
 
-            if (isAVariable)
+            if (isAKeyWord)
             {
-                SymbolTableRec record = context.GetSymbolTable().Find(sValue);
-
                 int offset = 0;
+
+                SymbolTableRec record = context.GetSymbolTable().Find(sValue);
 
                 if (record != null)
                 {
-                    switch (record.Type)
+                    type = record.VarType;
+
+                    switch (type)
                     {
                         case VariableType.CHARACTER:
                             cValue = record.GetChar(offset);

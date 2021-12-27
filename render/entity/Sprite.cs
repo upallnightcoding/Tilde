@@ -1,15 +1,16 @@
 ﻿using OpenTK.Graphics.OpenGL4;
+using Tilde.render.entity;
 
-namespace Tilde.entity
+namespace Tilde.render.entity
 {
     class Sprite : Entity
     {
         private string TEST_IMAGE = 
             "D:/Projects/c#/OpenTkDemo/images/container.png";
 
-        protected override Texture CreateEntityTexture()
+        protected override string CreateEntityTexture()
         {
-            return (new Texture(TEST_IMAGE));
+            return (TEST_IMAGE);
         }
     }
 }

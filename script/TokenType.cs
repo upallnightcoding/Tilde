@@ -25,6 +25,8 @@ namespace Tilde.script
         SUBTRACT,
         ADD,
 
+        ASSIGN,
+
         OPERATOR,
         KEYWORD,
 

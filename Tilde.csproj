@@ -62,8 +62,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="entity\Entity.cs" />
+    <Compile Include="render\entity\Entity.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="render\entity\Model.cs" />
+    <Compile Include="render\entity\transform\Rotate.cs" />
+    <Compile Include="render\entity\transform\Scale.cs" />
+    <Compile Include="render\entity\transform\Translate.cs" />
     <Compile Include="script\CmdFactory.cs" />
     <Compile Include="script\commands\CmdCodeBlock.cs" />
     <Compile Include="script\commands\declare\CmdBoolean.cs" />
@@ -75,6 +79,7 @@
     <Compile Include="script\commands\declare\CmdDeclare.cs" />
     <Compile Include="script\commands\Context.cs" />
     <Compile Include="script\commands\declare\CmdString.cs" />
+    <Compile Include="script\DesignationType.cs" />
     <Compile Include="script\Expression.cs" />
     <Compile Include="script\nodes\Node.cs" />
     <Compile Include="script\nodes\NodeAdd.cs" />
@@ -90,8 +95,8 @@
     <Compile Include="script\SourceCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="render\Render.cs" />
-    <Compile Include="render\Render2DScene.cs" />
-    <Compile Include="render\RenderWindow.cs">
+    <Compile Include="render\screen\Render2DScene.cs" />
+    <Compile Include="render\screen\RenderWindow.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="script\symbol\ScopeLevels.cs" />
@@ -101,10 +106,12 @@
     <Compile Include="script\Token.cs" />
     <Compile Include="script\TokenType.cs" />
     <Compile Include="script\VariableType.cs" />
-    <Compile Include="Shader.cs" />
-    <Compile Include="Sprite.cs" />
-    <Compile Include="Texture.cs" />
-    <Compile Include="VAO.cs" />
+    <Compile Include="render\entity\Shader.cs" />
+    <Compile Include="render\entity\Sprite.cs" />
+    <Compile Include="TestCase.cs" />
+    <Compile Include="render\entity\Texture.cs" />
+    <Compile Include="render\entity\transform\Transform.cs" />
+    <Compile Include="render\entity\VAO.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

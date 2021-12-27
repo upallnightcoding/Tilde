@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using Leo;
+using System.Windows.Forms;
 using Tilde.script;
 
 namespace Tilde
@@ -11,7 +12,7 @@ namespace Tilde
         //[STAThread]
         static void Main()
         {
-            TestParse();
+            TestGUI();
         }
 
         static void TestGUI()
@@ -23,20 +24,20 @@ namespace Tilde
 
         static void TestParse()
         {
-            SourceCode source = new SourceCode();
-            
-            source.Add("program test {");
-            source.Add("    integer a, b, c , x, y, z;");
-            source.Add("    float n, m;");
-            source.Add("    print (a + (6 + b)), \" \", 87.001 + 50.56 ;");
-            source.Add("    print (32 - (6 - 3)), \" \", 87.001 - 50.56 ;");
-            source.Add("    print (32 * (6 * 3)), \" \", 87.001 * 50.56 ;");
-            source.Add("    {");
-            source.Add("        print \"Line 1 \", 987.765 ;");
-            source.Add("        print 1, \" \", 2, \" \",3, \" \",4 ;");
-            source.Add("    }");
-            source.Add("    print 0.098, \" Line 2 \", 987.765 ;");
-            source.Add("}");
+            SourceCode source = TestCase.Case02();
+
+            //source.Add("program test {");
+            //source.Add("    integer a, b, c , x, y, z;");
+            //source.Add("    float n, m;");
+            //source.Add("    print (a + (6 + b)), \" \", 87.001 + 50.56 ;");
+            //source.Add("    print (32 - (6 - 3)), \" \", 87.001 - 50.56 ;");
+            //source.Add("    print (32 * (6 * 3)), \" \", 87.001 * 50.56 ;");
+            //source.Add("    {");
+            //source.Add("        print \"Line 1 \", 987.765 ;");
+            //source.Add("        print 1, \" \", 2, \" \",3, \" \",4 ;");
+            //source.Add("    }");
+            //source.Add("    print 0.098, \" Line 2 \", 987.765 ;");
+            //source.Add("}");
 
             TildeScript tilde = new TildeScript(source);
 

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tilde.script;
+using Tilde.script.commands;
+using Tilde.script.nodes;
 
 namespace Leo.script.symbol
 {
@@ -18,7 +20,10 @@ namespace Leo.script.symbol
         public string Variable { get; set; } = null;
 
         // Variable Type
-        public VariableType Type { get; set; } = VariableType.UNKNOWN;
+        public VariableType VarType { get; set; } = VariableType.UNKNOWN;
+
+        // Variable Designation Type
+        public DesignationType DesigType { get; set; } = DesignationType.UNKNOWN;
 
         // Variable Size, number of variable elements
         private int size = -1;
@@ -34,13 +39,13 @@ namespace Leo.script.symbol
         /*** Constructor ***/
         /*******************/
 
-        public SymbolTableRec(VariableType type, string variable, int size = 1)
+        public SymbolTableRec(VariableType VarType, string variable, int size)
         {
-            this.Type = type;
+            this.VarType = VarType;
             this.Variable = variable;
             this.size = size;
 
-            switch(type)
+            switch(VarType)
             {
                 case VariableType.INTEGER:
                     iValue = new long[size];
@@ -56,6 +61,33 @@ namespace Leo.script.symbol
                     break;
                 case VariableType.BOOLEAN:
                     bValue = new bool[size];
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Assign() - 
+        /// </summary>
+        /// <param name="offset"></param>
+        /// <param name="value"></param>
+        public void Assign(int offset, NodeValue value)
+        {
+            switch (VarType)
+            {
+                case VariableType.INTEGER:
+                    iValue[offset] = value.GetInteger();
+                    break;
+                case VariableType.STRING:
+                    sValue[offset] = value.GetString();
+                    break;
+                case VariableType.FLOAT:
+                    fValue[offset] = value.GetFloat();
+                    break;
+                case VariableType.CHARACTER:
+                    cValue[offset] = value.GetChar();
+                    break;
+                case VariableType.BOOLEAN:
+                    bValue[offset] = value.GetBoolean();
                     break;
             }
         }

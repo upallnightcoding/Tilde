@@ -1,6 +1,6 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 
-namespace Tilde
+namespace Tilde.render.entity
 {
     public class VAO
     {

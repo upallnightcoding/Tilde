@@ -95,8 +95,6 @@ namespace Tilde.script
         {
             simpleTokens = new Dictionary<char, TokenType>
             {
-                [','] = TokenType.FIELD_SEPARATOR,
-
                 // Operator Tokens
                 //----------------
                 ['+'] = TokenType.ADD,
@@ -104,6 +102,9 @@ namespace Tilde.script
                 ['*'] = TokenType.MULTIPLY,
                 ['/'] = TokenType.DIVIDE,
 
+                ['='] = TokenType.ASSIGN,
+
+                [','] = TokenType.FIELD_SEPARATOR,
                 [';'] = TokenType.EOS,
                 ['('] = TokenType.LEFT_PAREN,
                 [')'] = TokenType.RIGHT_PAREN,

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Leo.script.commands;
 
-namespace Tilde.script.commands
+namespace Tilde.script.nodes
 {
     abstract class Node
     {

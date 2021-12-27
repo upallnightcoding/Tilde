@@ -179,7 +179,7 @@ namespace Tilde.script
                     node = new NodeValue(iValue);
                     break;
                 case TokenType.STRING:
-                    node = new NodeValue(sValue);
+                    node = new NodeValue(sValue, VariableType.STRING);
                     break;
                 case TokenType.CHARACTER:
                     node = new NodeValue(cValue);
@@ -188,13 +188,21 @@ namespace Tilde.script
                     node = new NodeValue(bValue);
                     break;
                 case TokenType.KEYWORD:
-                    node = new NodeValue(sValue, VariableType.VARIABLE);
+                    node = new NodeValue(sValue, VariableType.KEYWORD);
                     break;
             }
 
             return (node);
         }
 
+        /// <summary>
+        /// Rank() - Returns the ranking value that is used during the 
+        /// postfix parsing of expressions.  This ranking defines the 
+        /// order of operation of the different operators as the postfix
+        /// is being created.  All operators must be represented in this
+        /// function.
+        /// </summary>
+        /// <returns></returns>
         public int Rank()
         {
             int value = -1;
@@ -241,6 +249,8 @@ namespace Tilde.script
         public bool IsRightParen() => (type == TokenType.RIGHT_PAREN);
 
         public bool IsAKeyWord() => (type == TokenType.KEYWORD);
+
+        public bool IsAssign() => (type == TokenType.ASSIGN);
 
         public bool IsOperator()
         {

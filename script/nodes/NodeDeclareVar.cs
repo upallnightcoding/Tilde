@@ -12,25 +12,45 @@ namespace Leo.script.nodes
 
         private VariableType type = VariableType.UNKNOWN;
 
+        private Node initialize = null;
+
         /*******************/
         /*** Constructor ***/
         /*******************/
 
-        public NodeDeclareVar(VariableType type, Token variable)
+        public NodeDeclareVar(VariableType type, Token variable) : this(type, variable, null)
+        {
+            
+        }
+
+        public NodeDeclareVar(VariableType type, Token variable, Node initialize)
         {
             this.type = type;
             this.variable = variable.GetVariable();
+            this.initialize = initialize;
         }
 
         /************************/
         /*** Public Functions ***/
         /************************/
 
+        /// <summary>
+        /// Execute() - 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public override NodeValue Execute(Context context)
         {
+            Console.WriteLine("Type: " + type + " - Variable: " + variable);
+
             context.GetSymbolTable().Declare(type, variable, 1);
 
-            Console.WriteLine("Type: " + type + " - Variable: " + variable);
+            if (initialize != null)
+            {
+                NodeValue value = initialize.Execute(context);
+
+                context.GetSymbolTable().Assign(variable, 0, value);
+            }
 
             return (null);
         }

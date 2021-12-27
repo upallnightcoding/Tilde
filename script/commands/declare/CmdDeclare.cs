@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tilde.script;
 using Tilde.script.commands;
+using Tilde.script.nodes;
 
 namespace Leo.script.commands.declare
 {
@@ -31,13 +32,39 @@ namespace Leo.script.commands.declare
         {
             NodeDeclare nodeDeclare = new NodeDeclare(type);
 
-            Token variable = parser.GetToken();
+            Expression expression = new Expression();
+
+            Token variable = new Token();
 
             while (!variable.IsEOS())
             {
-                nodeDeclare.Add(new NodeDeclareVar(type, variable));
+                variable = parser.GetToken(); 
 
-                variable = ReadNextToken(parser); 
+                Token token = parser.GetToken();
+
+                if (token.IsAssign())
+                {
+                    Node initialize = expression.Translate(parser);
+
+                    nodeDeclare.Add(new NodeDeclareVar(type, variable, initialize));
+
+                    if (expression.LastToken.IsEOS())
+                    {
+                        variable = expression.LastToken;
+                    } 
+                    else if (expression.LastToken.IsComma())
+                    {
+                        // Do Nothing
+                    }
+                } 
+                else if (token.IsComma()) 
+                {
+                    nodeDeclare.Add(new NodeDeclareVar(type, variable));
+                }
+                else if (token.IsEOS())
+                {
+                    variable = token;
+                }
             }
 
             return (nodeDeclare);

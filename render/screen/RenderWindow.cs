@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using System;
 using Tilde.render;
 
-namespace Tilde
+namespace Tilde.render.screen
 {
     class RenderWindow : OpenTK.GLControl
     {

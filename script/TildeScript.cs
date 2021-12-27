@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Leo.script.commands;
+using Tilde.script.nodes;
 
 namespace Tilde.script
 {

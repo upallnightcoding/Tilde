@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tilde.script;
+using Tilde.script.nodes;
 
 namespace Leo.script.symbol
 {
@@ -48,6 +49,22 @@ namespace Leo.script.symbol
         public void Declare(VariableType type, string variable, int size)
         {
             Add(new SymbolTableRec(type, variable, size));
+        }
+
+        /// <summary>
+        /// Assign() - 
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="offset"></param>
+        /// <param name="value"></param>
+        public void Assign(string variable, int offset, NodeValue value)
+        {
+            SymbolTableRec record = Find(variable);
+
+            if (record != null)
+            {
+                record.Assign(offset, value);
+            }
         }
 
         public SymbolTableRec Find(string variable)
