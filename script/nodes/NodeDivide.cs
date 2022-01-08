@@ -1,4 +1,4 @@
-﻿using Leo.script.commands;
+﻿using Tilde.script.commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Tilde.script.commands;
 using Tilde.script.nodes;
 
-namespace Leo.script.nodes
+namespace Tilde.script.nodes
 {
     class NodeDivide : Node
     {

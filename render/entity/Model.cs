@@ -3,7 +3,7 @@ using OpenTK.Graphics.OpenGL4;
 using OpenTK;
 using Tilde;
 
-namespace Leo.render.entity
+namespace Tilde.render.entity
 {
     class Model
     {
@@ -13,7 +13,7 @@ namespace Leo.render.entity
 
         private Texture texture1 = null;
 
-        private Texture texture2 = null;
+        //private Texture texture2 = null;
 
         public void Initialize()
         {
@@ -24,8 +24,8 @@ namespace Leo.render.entity
             texture1 = new Texture("D:/Projects/c#/OpenTkDemo/images/container.png");
             texture1.Use(TextureUnit.Texture0);
 
-            texture2 = new Texture("D:/Projects/c#/OpenTkDemo/images/awesomeface.png");
-            texture2.Use(TextureUnit.Texture1);
+            //texture2 = new Texture("D:/Projects/c#/OpenTkDemo/images/awesomeface.png");
+            //texture2.Use(TextureUnit.Texture1);
 
             shader.SetInt("texture0", 0);
             shader.SetInt("texture1", 1);
@@ -36,7 +36,7 @@ namespace Leo.render.entity
             vao.Use();
 
             texture1.Use(TextureUnit.Texture0);
-            texture2.Use(TextureUnit.Texture1);
+            //texture2.Use(TextureUnit.Texture1);
 
             shader.Use();
 

@@ -1,4 +1,4 @@
-﻿using Leo.render.entity.transform;
+﻿using Tilde.render.entity.transform;
 using OpenTK;
 using System;
 using System.Collections.Generic;
@@ -32,6 +32,11 @@ namespace Tilde.render.entity.transform
         public void Move(float x, float y, float z)
         {
             translate.Move(x, y, z);
+        }
+
+        public void Turn(float x, float y, float z)
+        {
+            rotate.Turn(x, y, z);
         }
 
         public Matrix4 Calculate()

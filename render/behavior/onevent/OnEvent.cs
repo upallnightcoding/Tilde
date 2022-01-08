@@ -4,13 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tilde.script.commands.declare
+namespace Tilde.render.behavior.onevent
 {
-    class CmdFloat : CmdDeclare
+    class OnEvent
     {
-        public CmdFloat() : base("FLOAT")
-        {
-
-        }
     }
 }

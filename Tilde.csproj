@@ -62,12 +62,20 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="render\behavior\action\Action.cs" />
+    <Compile Include="render\behavior\action\ActionDoNothing.cs" />
+    <Compile Include="render\behavior\action\ActionMove.cs" />
+    <Compile Include="render\behavior\action\ActionTurn.cs" />
+    <Compile Include="render\behavior\Behavior.cs" />
+    <Compile Include="render\behavior\onevent\OnEvent.cs" />
+    <Compile Include="render\behavior\State.cs" />
     <Compile Include="render\entity\Entity.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="render\entity\Model.cs" />
     <Compile Include="render\entity\transform\Rotate.cs" />
     <Compile Include="render\entity\transform\Scale.cs" />
     <Compile Include="render\entity\transform\Translate.cs" />
+    <Compile Include="render\scene\Scene.cs" />
     <Compile Include="script\CmdFactory.cs" />
     <Compile Include="script\commands\CmdCodeBlock.cs" />
     <Compile Include="script\commands\declare\CmdBoolean.cs" />
@@ -94,9 +102,9 @@
     <Compile Include="script\Parser.cs" />
     <Compile Include="script\SourceCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="render\Render.cs" />
-    <Compile Include="render\screen\Render2DScene.cs" />
-    <Compile Include="render\screen\RenderWindow.cs">
+    <Compile Include="render\scene\Render.cs" />
+    <Compile Include="render\scene\Render2DScene.cs" />
+    <Compile Include="render\scene\RenderWindow.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="script\symbol\ScopeLevels.cs" />

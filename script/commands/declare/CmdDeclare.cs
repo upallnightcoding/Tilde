@@ -1,4 +1,4 @@
-﻿using Leo.script.nodes;
+﻿using Tilde.script.nodes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using Tilde.script;
 using Tilde.script.commands;
 using Tilde.script.nodes;
 
-namespace Leo.script.commands.declare
+namespace Tilde.script.commands.declare
 {
     /// <summary>
     /// CmdDeclare - 

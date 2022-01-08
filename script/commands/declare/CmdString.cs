@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Leo.script.commands.declare
+namespace Tilde.script.commands.declare
 {
     class CmdString : CmdDeclare
     {

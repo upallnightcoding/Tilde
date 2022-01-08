@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Tilde.script;
 using Tilde.script.nodes;
 
-namespace Leo.script.symbol
+namespace Tilde.script.symbol
 {
     /// <summary>
     /// SymbolTable - 

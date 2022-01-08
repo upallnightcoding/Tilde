@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Leo.script.symbol
+namespace Tilde.script.symbol
 {
     class ScopeLevels
     {

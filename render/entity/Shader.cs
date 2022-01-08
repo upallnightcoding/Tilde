@@ -15,7 +15,7 @@ namespace Tilde.render.entity
             "uniform sampler2D texture1;\n" +
             "void main()\n" +
             "{\n" +
-            "outputColor = mix(texture(texture0, texCoord), texture(texture1, texCoord), 0.5);\n" +
+            "outputColor = mix(texture(texture0, texCoord), texture(texture1, texCoord), 0.01);\n" +
             "}\n"
             ;
 

@@ -7,7 +7,7 @@ using Tilde.script;
 using Tilde.script.commands;
 using Tilde.script.nodes;
 
-namespace Leo.script.symbol
+namespace Tilde.script.symbol
 {
     /// <summary>
     /// SymbolTableRec - This class represents an instance of a variable that
