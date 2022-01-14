@@ -28,6 +28,11 @@ namespace Tilde.script
         /*** Public Functions ***/
         /************************/
 
+        /// <summary>
+        /// Translate() - 
+        /// </summary>
+        /// <param name="parser"></param>
+        /// <returns></returns>
         public Node Translate(Parser parser)
         {
             Initialize();

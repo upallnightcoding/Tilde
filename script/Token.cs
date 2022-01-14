@@ -1,14 +1,18 @@
-﻿using Tilde.script.commands;
-using Tilde.script.nodes;
+﻿using Tilde.script.nodes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tilde.script.nodes;
+using Leo.script.nodes;
 
 namespace Tilde.script
 {
+    /// <summary>
+    /// Adding New Binary Operators - Update the following functions
+    /// ------------------------------------------------------------
+    /// CreateNodeOperator() - Create the node based on token type
+    /// Rank() - Defines the token ranking for expression evaluation
+    /// IsOperator() - Defines the token as an operator
+    /// *Create the node class that will execute the action
+    /// 
+    /// </summary>
     class Token
     {
         // Default Token Type
@@ -135,7 +139,9 @@ namespace Tilde.script
         }
 
         /// <summary>
-        /// CreateNodeOperator() - 
+        /// CreateNodeOperator() - Based on the token type, a node is created to
+        /// represent the action to be taken during execution.  This function 
+        /// works for binary operators.  
         /// </summary>
         /// <param name="leftValue"></param>
         /// <param name="rightValue"></param>
@@ -156,6 +162,10 @@ namespace Tilde.script
                     node = new NodeMultiply(leftValue, rightValue);
                     break;
                 case TokenType.DIVIDE:
+                    node = new NodeDivide(leftValue, rightValue);
+                    break;
+                case TokenType.EQ:
+                    node = new NodeEQ(leftValue, rightValue);
                     break;
             }
 
@@ -209,6 +219,9 @@ namespace Tilde.script
 
             switch(type)
             {
+                case TokenType.EQ:
+                    value = 30;
+                    break;
                 case TokenType.MULTIPLY:
                 case TokenType.DIVIDE:
                     value = 20;
@@ -252,6 +265,11 @@ namespace Tilde.script
 
         public bool IsAssign() => (type == TokenType.ASSIGN);
 
+        /// <summary>
+        /// IsOperator() - Returns a true if the token is a binary operator.  If
+        /// is not, a false is returned.
+        /// </summary>
+        /// <returns></returns>
         public bool IsOperator()
         {
             bool value = false;
@@ -262,6 +280,7 @@ namespace Tilde.script
                 case TokenType.DIVIDE:
                 case TokenType.SUBTRACT:
                 case TokenType.ADD:
+                case TokenType.EQ:
                     value = true;
                     break;
             }
@@ -269,6 +288,10 @@ namespace Tilde.script
             return (value);
         }
 
+        /// <summary>
+        /// IsAConstant() - 
+        /// </summary>
+        /// <returns></returns>
         public bool IsAConstant()
         {
             bool value = false;
@@ -278,6 +301,7 @@ namespace Tilde.script
                 case TokenType.FLOAT:
                 case TokenType.INTEGER:
                 case TokenType.STRING:
+                case TokenType.CHARACTER:
                     value = true;
                     break;
             }
@@ -285,7 +309,7 @@ namespace Tilde.script
             return (value);
         }
 
-        public void Debug()
+        public void Debug()  // TODO : This function should be deleted
         {
             switch(type)
             {

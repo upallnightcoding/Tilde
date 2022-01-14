@@ -20,14 +20,34 @@ namespace Tilde.script
         BEGIN_EXP_MARKER,
 
         EOE,
-        MULTIPLY,
-        DIVIDE,
-        SUBTRACT,
-        ADD,
+
+        // Binary Operator Types
+        //----------------------
+        MULTIPLY,   // '*'
+        DIVIDE,     // '/'
+        SUBTRACT,   // '-'
+        ADD,        // '+'
+
+        POWER,        // '^'
+        MOD,        // '%'
+
+        // Logical Operator Types
+        //-----------------------
+        GT, // Logical Greater Than
+        GE, // Logical Greater Than or Equal To
+        LT, // Logical Less Than
+        LE, // Logical Less Then or Equal To
+        EQ, // Logical Equal
+        NE, // Logical Not Equal
+
+        AND,
+        OR,
+        NOT,
+
+        NO_TOKEN,
 
         ASSIGN,
 
-        OPERATOR,
         KEYWORD,
 
         LEFT_PAREN,

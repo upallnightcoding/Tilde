@@ -42,13 +42,13 @@ namespace Tilde
         /// is pointing past the last programming line.
         /// </summary>
         /// <returns></returns>
-        public bool Eoc() => line >= sourceCode.Count;
+        public bool Eoc() => (line >= sourceCode.Count);
 
         /// <summary>
         /// PeekChar() - Returns the active programing character
         /// </summary>
         /// <returns></returns>
-        public char PeekChar() => sourceCode[line][character];
+        public char PeekChar() => (sourceCode[line][character]);
 
         /// <summary>
         /// Reset() - Reset the source code pointers to the beginning of the 

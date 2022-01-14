@@ -1,40 +1,31 @@
 ﻿using System.Collections.Generic;
+using Tilde.render.behavior.action;
+using Tilde.render.entity;
 
-namespace Tilde.render.behavior
+namespace Leo.render.behavior
 {
-    /// <summary>
-    /// Behavior - 
-    /// </summary>
     class Behavior
     {
-        private Dictionary<string, State> fms = null;
-
-        // Marks the starting state in the FSM
-        private State starting = null;
-
-        /*******************/
-        /*** Constructor ***/
-        /*******************/
+        private List<Action> actionList = null;
 
         public Behavior()
         {
-            fms = new Dictionary<string, State>();
+            actionList = new List<Action>();
         }
 
-        /// <summary>
-        /// Add() - 
-        /// </summary>
-        /// <param name="state"></param>
-        public void Add(State state)
+        public void Add(Action action)
         {
-            if (state != null)
+            if (action != null)
             {
-                if (starting == null)
-                {
-                    starting = state;
-                }
+                actionList.Add(action);
+            }
+        }
 
-                fms.Add(state.Name, state);
+        public void Update(Entity entity)
+        {
+            foreach (Action action in actionList)
+            {
+                action.Update(entity);
             }
         }
     }

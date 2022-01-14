@@ -1,7 +1,5 @@
 ﻿using Tilde.script.commands;
 using Tilde.script.symbol;
-using System;
-using Tilde.script.commands;
 
 namespace Tilde.script.nodes
 {
@@ -80,6 +78,10 @@ namespace Tilde.script.nodes
 
         public bool IsString() => (type == VariableType.STRING);
 
+        public bool IsChar() => (type == VariableType.CHARACTER);
+
+        public bool IsBoolean() => (type == VariableType.BOOLEAN);
+
         /****************************/
         /*** Conversion Functions ***/
         /****************************/
@@ -117,7 +119,7 @@ namespace Tilde.script.nodes
         }
 
         /// <summary>
-        /// GetFloat() - Returns the value of th NodeValue as a Tilde Float.
+        /// GetFloat() - Returns the value of the NodeValue as a Tilde Float.
         /// </summary>
         /// <returns></returns>
         public double GetFloat()

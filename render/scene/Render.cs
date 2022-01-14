@@ -25,12 +25,13 @@ namespace Tilde.render.scene
 
         /// <summary>
         /// Update() - This function is called to update the entities that
-        /// are within the scene.
+        /// are within the scene.  This function is called based on the setting
+        /// of the FPS.
         /// </summary>
         void Update();
 
         /// <summary>
-        /// Set() - 
+        /// Set() - This function allows for the changing of a scene.
         /// </summary>
         /// <param name="scene"></param>
         void Set(Scene scene);

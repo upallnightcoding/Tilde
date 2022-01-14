@@ -1,10 +1,4 @@
 ﻿using Tilde.script.commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tilde.script.commands;
 
 namespace Tilde.script.nodes
 {

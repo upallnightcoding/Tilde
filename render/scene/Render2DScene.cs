@@ -5,6 +5,13 @@ using Tilde.render.entity;
 
 namespace Tilde.render.scene
 {
+    /// <summary>
+    /// Render2DScene - This class is used to display and update a scene.  The
+    /// Set function is used to define the scene within the class while the
+    /// Update() and Display() functions are used to update and display the scene
+    /// based on the FPS.  The Initialize() function is called only once 
+    /// before any rendering to initialize the display().
+    /// </summary>
     class Render2DScene : Render
     {
         private double time = 0.0f;

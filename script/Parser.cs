@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Leo.script;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace Tilde.script
         // Reference to source code object
         private SourceCode source = null;
 
-        private Dictionary<char, TokenType> simpleTokens = null;
+        private Dictionary<char, SimpleToken> simpleTokens = null;
 
         /*******************/
         /*** Constructor ***/
@@ -24,10 +25,10 @@ namespace Tilde.script
         public Parser(SourceCode source)
         {
             this.source = source;
+            this.source.Reset();
+            this.simpleTokens = new Dictionary<char, SimpleToken>();
 
             CreateSimpleTokens();
-
-            this.source.Reset();
 
             SkipBlanks();
         }
@@ -47,17 +48,20 @@ namespace Tilde.script
                 if (IsDigit(character) || (character == FLOATING_POINT_MARK))
                 {
                     token = GetNumber();
-                } else if (IsLetter(character))
+                } 
+                else if (IsLetter(character))
                 {
                     token = GetKeyWord();
-                } else if (IsSimpleToken(character))
+                } 
+                else if (IsSimpleToken(character))
                 {
                     token = GetSimpleToken();
-
-                } else if (character == STRING_INDICATOR)
+                } 
+                else if (character == STRING_INDICATOR)
                 {
                     token = GetString();
-                } else if (character == '\'')
+                } 
+                else if (character == '\'')
                 {
                     token = GetChar();
                 }
@@ -86,32 +90,54 @@ namespace Tilde.script
         }
 
         /// <summary>
-        /// CreateSimpleTokens() - Creates the simple one character tokens that
-        /// are used by the scripting language.  If these tokens are used in 
-        /// combination with any other token, then it is NOT considered
-        /// simple.
+        /// CreateSimpleTokens() - Parses the one/two character tokens that
+        /// are used by the scripting language.  
         /// </summary>
         private void CreateSimpleTokens()
         {
-            simpleTokens = new Dictionary<char, TokenType>
-            {
-                // Operator Tokens
-                //----------------
-                ['+'] = TokenType.ADD,
-                ['-'] = TokenType.SUBTRACT,
-                ['*'] = TokenType.MULTIPLY,
-                ['/'] = TokenType.DIVIDE,
+            CreateSimpleTokens(',', ' ', TokenType.FIELD_SEPARATOR, TokenType.NO_TOKEN);
+            CreateSimpleTokens(';', ' ', TokenType.EOS,             TokenType.NO_TOKEN);
+            CreateSimpleTokens('(', ' ', TokenType.LEFT_PAREN,      TokenType.NO_TOKEN);
+            CreateSimpleTokens(')', ' ', TokenType.RIGHT_PAREN,     TokenType.NO_TOKEN);
+            CreateSimpleTokens('{', ' ', TokenType.LEFT_BRACE,      TokenType.NO_TOKEN);
+            CreateSimpleTokens('}', ' ', TokenType.RIGHT_BRACE,     TokenType.NO_TOKEN);
 
-                ['='] = TokenType.ASSIGN,
+            CreateSimpleTokens('+', ' ', TokenType.ADD,             TokenType.NO_TOKEN);
+            CreateSimpleTokens('-', ' ', TokenType.SUBTRACT,        TokenType.NO_TOKEN);
+            CreateSimpleTokens('*', ' ', TokenType.MULTIPLY,        TokenType.NO_TOKEN);
+            CreateSimpleTokens('/', ' ', TokenType.DIVIDE,          TokenType.NO_TOKEN);
+            CreateSimpleTokens('^', ' ', TokenType.POWER,           TokenType.NO_TOKEN);
+            CreateSimpleTokens('%', ' ', TokenType.MOD,             TokenType.NO_TOKEN);
 
-                [','] = TokenType.FIELD_SEPARATOR,
-                [';'] = TokenType.EOS,
-                ['('] = TokenType.LEFT_PAREN,
-                [')'] = TokenType.RIGHT_PAREN,
-                ['{'] = TokenType.LEFT_BRACE,
-                ['}'] = TokenType.RIGHT_BRACE
-            };
+            CreateSimpleTokens('<', '=', TokenType.LT,              TokenType.LE);
+            CreateSimpleTokens('>', '=', TokenType.GT,              TokenType.GE);
+            CreateSimpleTokens('&', '&', TokenType.NO_TOKEN,        TokenType.AND);
+            CreateSimpleTokens('|', '|', TokenType.NO_TOKEN,        TokenType.OR);
+            CreateSimpleTokens('=', '=', TokenType.ASSIGN,          TokenType.EQ);
+            CreateSimpleTokens('!', '=', TokenType.NOT,             TokenType.NE);
         }
+
+        /// <summary>
+        /// CreateSimpleTokens() - 
+        /// </summary>
+        /// <param name="firstToken"></param>
+        /// <param name="secondToken"></param>
+        /// <param name="firstTokenType"></param>
+        /// <param name="secondTokenType"></param>
+        private void CreateSimpleTokens(
+            char firstToken, 
+            char secondToken, 
+            TokenType firstTokenType, 
+            TokenType secondTokenType
+        )
+        {
+            simpleTokens[firstToken] = 
+                new SimpleToken(firstToken, secondToken, firstTokenType, secondTokenType);
+        }
+
+        /******************************/
+        /*** Simple Token Functions ***/
+        /******************************/
 
         private bool IsSimpleToken(char character)
         {
@@ -120,14 +146,51 @@ namespace Tilde.script
 
         private Token GetSimpleToken()
         {
-            TokenType type;
+            SimpleToken type;
             Token token = null;
             char character = PeekChar();
 
             if (simpleTokens.TryGetValue(character, out type))
             {
-                token = new Token(type);
-                MoveNextChar();
+                if (type.isFirstNoToken())
+                {
+                    character = GetNextChar();
+
+                    if (type.isEqualSecondToken(character))
+                    {
+                        token = new Token(type.SecondTokenType);
+
+                        MoveNextChar();
+                    }
+                    else
+                    {
+                        token = new Token();
+                    }
+                }
+                else if (type.isSecondNoToken())
+                {
+                    token = new Token(type.FirstTokenType);
+
+                    MoveNextChar();
+                }
+                else
+                {
+                    character = GetNextChar();
+
+                    if (type.isEqualSecondToken(character))
+                    {
+                        token = new Token(type.SecondTokenType);
+
+                        MoveNextChar();
+                    } else
+                    {
+                        token = new Token(type.FirstTokenType);
+                    }
+
+                }
+            } else
+            {
+                token = new Token();
             }
 
             return (token);

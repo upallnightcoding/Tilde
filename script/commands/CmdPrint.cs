@@ -8,9 +8,12 @@ using System.Threading.Tasks;
 
 namespace Tilde.script
 {
+    /// <summary>
+    /// CmdPrint - 
+    /// </summary>
     class CmdPrint : Cmd
     {
-        private static string COMMAND = "PRINT";
+        private const string COMMAND = "PRINT";
 
         private Expression expression = null;
 

@@ -15,8 +15,6 @@ namespace Tilde
         public Form1()
         {
             InitializeComponent();
-
-            renderWindow.Setup();
         }
     }
 }

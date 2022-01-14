@@ -4,16 +4,20 @@ using OpenTK.Graphics.OpenGL4;
 using Tilde.render.entity.transform;
 using System.Collections.Generic;
 using Tilde.render.behavior.action;
+using Leo.render.behavior;
+using Tilde.render.behavior;
 
 namespace Tilde.render.entity
 {
     public abstract class Entity
     {
+        // Defines the entity texture and mesh
         private Model model = null;
 
+        // Defines the matrix translation, rotation and scale
         private Transform transform = null;
 
-        private List<Action> actionList = null;
+        private FSM fsm = null;
 
         // Abstract Functions
         //-------------------
@@ -28,8 +32,6 @@ namespace Tilde.render.entity
             model = new Model();
 
             transform = new Transform();
-
-            actionList = new List<Action>();
         }
 
         /************************/
@@ -43,24 +45,34 @@ namespace Tilde.render.entity
 
         public void Display(double time, Camera camera)
         {
-            var t = transform.Calculate();
-
-            model.Display(time, camera, t);
+            model.Display(time, camera, transform.Calculate());
         }
 
         public void Update()
         {
-            foreach(Action action in actionList)
-            {
-                action.Update(this);
-            }
+            fsm.Update(this);
+        }
+
+        public void Set(FSM fsm)
+        {
+            this.fsm = fsm;
         }
 
         public void Add(Action action)
         {
             if (action != null)
             {
-                actionList.Add(action);
+                if (fsm == null)
+                {
+                    State state = new State("Start");
+                    state.Add(action);
+
+                    fsm = new FSM();
+                    fsm.Add(state);
+                } else
+                {
+                    fsm.Add(action);
+                }
             }
         }
 
