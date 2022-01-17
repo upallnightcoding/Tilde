@@ -14,8 +14,8 @@ namespace Tilde.script.nodes
         {
             NodeValue value = null;
 
-            NodeValue vLeft = (NodeValue)(GetNode(0).Execute(context));
-            NodeValue vRight = (NodeValue)(GetNode(1).Execute(context));
+            NodeValue vLeft = GetNode(0).Execute(context); 
+            NodeValue vRight = GetNode(1).Execute(context);
 
             if (vLeft.IsFloat() && vRight.IsFloat())
             {

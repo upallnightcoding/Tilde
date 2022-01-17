@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Leo.script;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,7 +27,7 @@ namespace Tilde.script.symbol
         public DesignationType DesigType { get; set; } = DesignationType.UNKNOWN;
 
         // Variable Size, number of variable elements
-        private int size = -1;
+        private int Size { get; set; } = -1;
 
         // Variable Values
         private long[] iValue = null;
@@ -39,28 +40,42 @@ namespace Tilde.script.symbol
         /*** Constructor ***/
         /*******************/
 
-        public SymbolTableRec(VariableType VarType, string variable, int size)
+        public SymbolTableRec(
+            VariableType varType, 
+            string variable, 
+            ArrayElement arrayElement, 
+            Context context
+        )
         {
-            this.VarType = VarType;
+            this.VarType = varType;
             this.Variable = variable;
-            this.size = size;
 
-            switch(VarType)
+            if (arrayElement == null)
+            {
+                this.DesigType = DesignationType.VARIABLE;
+                this.Size = 1;
+            } else
+            {
+                this.DesigType = DesignationType.ARRAY;
+                this.Size = arrayElement.CalcSize(context);
+            }
+
+            switch (VarType)
             {
                 case VariableType.INTEGER:
-                    iValue = new long[size];
+                    iValue = new long[Size];
                     break;
                 case VariableType.STRING:
-                    sValue = new string[size];
+                    sValue = new string[Size];
                     break;
                 case VariableType.FLOAT:
-                    fValue = new double[size];
+                    fValue = new double[Size];
                     break;
                 case VariableType.CHARACTER:
-                    cValue = new char[size];
+                    cValue = new char[Size];
                     break;
                 case VariableType.BOOLEAN:
-                    bValue = new bool[size];
+                    bValue = new bool[Size];
                     break;
             }
         }

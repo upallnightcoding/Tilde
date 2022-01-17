@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Leo.script;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,27 +42,31 @@ namespace Tilde.script
 
             while(!EndOfExpression(token))
             {
-                if (token.IsAConstant() || token.IsAKeyWord())
+                if (token.IsAConstant())
                 {
-                    PushVarStack(token);
+                    token = PushConstStack(parser, token);
                 } 
+                else if (token.IsASymbol())
+                {
+                    token = PushVarStack(parser, token);
+                }
                 else if (token.IsOperator())
                 {
-                    PushOperStack(token, false);
+                    token = PushOperStack(parser, token, false);
                 }
                 else if (token.IsLeftParen())
                 {
-                    PushOperStack(token, true);
+                    token = PushOperStack(parser, token, true);
                 }
                 else if (token.IsRightParen())
                 {
-                    PopParenStack();
+                    token = PopParenStack(parser);
                 }
-
-                token = parser.GetToken();
             }
 
-            EmptyOperStack(token);            
+            EmptyOperStack();
+
+            LastToken = token;
 
             return (varStack.Peek());
         }
@@ -78,27 +83,49 @@ namespace Tilde.script
             operStack.Push(Token.CreateOperStackMarker());
         }
 
-        private void EmptyOperStack(Token token)
+        /// <summary>
+        /// EmptyOperStack() - Pops all of the operators off the operator stack
+        /// as the last task to complete the expression translation.  The end 
+        /// result of this function will have the final expression node as the
+        /// only node left in the operator stack.
+        /// </summary>
+        private void EmptyOperStack()
         {
             while (!operStack.Peek().IsEndOperStack())
             {
                 PopOperStack();
             }
-
-            LastToken = token;
         }
 
-        private void PushOperStack(Token token, bool force)
+        /// <summary>
+        /// PushOperStack() - Pushes an operator or a left paren on the operator
+        /// stack.  If the token is a left paren, it is place on the stack
+        /// without reguard to the current operator on top of the stack.  If
+        /// the token is an operator, it is compared to the rank of the operator
+        /// currently at the top of the stack.  
+        /// </summary>
+        /// <param name="parser"></param>
+        /// <param name="token"></param>
+        /// <param name="leftParen"></param>
+        /// <returns></returns>
+        private Token PushOperStack(Parser parser, Token token, bool leftParen)
         {
-            while (!force && (token.Rank() <= operStack.Peek().Rank()))
+            while (!leftParen && (token.Rank() <= operStack.Peek().Rank()))
             {
                 PopOperStack();
             }
 
             operStack.Push(token);
+
+            return (parser.GetToken());
         }
 
-        private void PopParenStack()
+        /// <summary>
+        /// PopParenStack() - 
+        /// </summary>
+        /// <param name="parser"></param>
+        /// <returns></returns>
+        private Token PopParenStack(Parser parser)
         {
             while(!operStack.Peek().IsLeftParen())
             {
@@ -106,6 +133,8 @@ namespace Tilde.script
             }
 
             operStack.Pop();
+
+            return (parser.GetToken());
         }
 
         /// <summary>
@@ -122,22 +151,61 @@ namespace Tilde.script
         }
 
         /// <summary>
-        /// PushVarStack() - 
+        /// PushConstStack() - Places the constant token directly on the 
         /// </summary>
+        /// <param name="parser"></param>
         /// <param name="token"></param>
-        private void PushVarStack(Token token)
+        /// <returns></returns>
+        private Token PushConstStack(Parser parser, Token token)
         {
             varStack.Push(token.CreateNodeValue());
+
+            return (parser.GetToken()); // Return Next Lead Token
         }
 
         /// <summary>
-        /// EndOfExpression() - 
+        /// PushVarStack() - 
+        /// </summary>
+        /// <param name="variable"></param>
+        private Token PushVarStack(Parser parser, Token variable)
+        {
+            NodeValue value = variable.CreateNodeValue();
+
+            Token token = parser.GetToken();
+
+            if (token.IsLeftBracket())
+            {
+                ArrayElement arrayElement = new ArrayElement();
+
+                Expression expression = new Expression();
+
+                while (!token.IsRightBracket())
+                {
+                    arrayElement.Add(expression.Translate(parser));
+
+                    token = expression.LastToken;
+                }
+
+                value.Set(arrayElement);
+
+                token = parser.GetToken();
+            }
+
+            varStack.Push(value);
+
+            return (token); // Return Next Lead Token
+        }
+
+        /// <summary>
+        /// EndOfExpression() - Defines the token that will mark the end of an
+        /// expression.  If the token is one of the end of expression markers,
+        /// a true is retuned.  If it is not, a false is returned.
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
         private bool EndOfExpression(Token token)
         {
-            return (token.IsComma() || token.IsEOS());
+            return (token.IsComma() || token.IsEOS() || token.IsRightBracket());
         }
     }
 }

@@ -79,6 +79,7 @@
     <Compile Include="render\entity\transform\Translate.cs" />
     <Compile Include="render\scene\MainLoop.cs" />
     <Compile Include="render\scene\Scene.cs" />
+    <Compile Include="script\ArrayElement.cs" />
     <Compile Include="script\CmdFactory.cs" />
     <Compile Include="script\commands\CmdAssign.cs" />
     <Compile Include="script\commands\CmdCodeBlock.cs" />
@@ -91,7 +92,7 @@
     <Compile Include="script\commands\declare\CmdDeclare.cs" />
     <Compile Include="script\commands\Context.cs" />
     <Compile Include="script\commands\declare\CmdString.cs" />
-    <Compile Include="script\DesignationType.cs" />
+    <Compile Include="script\symbol\DesignationType.cs" />
     <Compile Include="script\Expression.cs" />
     <Compile Include="script\nodes\Node.cs" />
     <Compile Include="script\nodes\NodeAdd.cs" />
@@ -120,7 +121,7 @@
     <Compile Include="script\TildeScript.cs" />
     <Compile Include="script\Token.cs" />
     <Compile Include="script\TokenType.cs" />
-    <Compile Include="script\VariableType.cs" />
+    <Compile Include="script\symbol\VariableType.cs" />
     <Compile Include="render\entity\Shader.cs" />
     <Compile Include="render\entity\Sprite.cs" />
     <Compile Include="TestCase.cs" />

@@ -1,4 +1,5 @@
-﻿using Tilde.script.commands;
+﻿using Leo.script;
+using Tilde.script.commands;
 using Tilde.script.symbol;
 
 namespace Tilde.script.nodes
@@ -22,7 +23,7 @@ namespace Tilde.script.nodes
         //-----------------------
         private VariableType type = VariableType.UNKNOWN;
 
-        private bool isAKeyWord = false;
+        private ArrayElement arrayElement = null;
 
         /*******************/
         /*** Constructor ***/
@@ -43,9 +44,8 @@ namespace Tilde.script.nodes
                 case VariableType.STRING:
                     this.type = type;
                     break;
-                case VariableType.KEYWORD:
+                case VariableType.SYMBOL:
                     this.type = type;
-                    this.isAKeyWord = true;
                     break;
             }
         }
@@ -81,6 +81,15 @@ namespace Tilde.script.nodes
         public bool IsChar() => (type == VariableType.CHARACTER);
 
         public bool IsBoolean() => (type == VariableType.BOOLEAN);
+
+        /************************/
+        /*** Public Functions ***/
+        /************************/
+
+        public void Set(ArrayElement arrayElement)
+        {
+            this.arrayElement = arrayElement;
+        }
 
         /****************************/
         /*** Conversion Functions ***/
@@ -178,32 +187,32 @@ namespace Tilde.script.nodes
         {
             NodeValue value = this;
 
-            if (isAKeyWord)
+            if (type == VariableType.SYMBOL)
             {
-                int offset = 0;
-
                 SymbolTableRec record = context.GetSymbolTable().Find(sValue);
 
                 if (record != null)
                 {
+                    int index = 0;
+
                     type = record.VarType;
 
                     switch (type)
                     {
                         case VariableType.CHARACTER:
-                            cValue = record.GetChar(offset);
+                            cValue = record.GetChar(index);
                             break;
                         case VariableType.STRING:
-                            sValue = record.GetString(offset);
+                            sValue = record.GetString(index);
                             break;
                         case VariableType.INTEGER:
-                            iValue = record.GetInteger(offset);
+                            iValue = record.GetInteger(index);
                             break;
                         case VariableType.FLOAT:
-                            fValue = record.GetFloat(offset);
+                            fValue = record.GetFloat(index);
                             break;
                         case VariableType.BOOLEAN:
-                            bValue = record.GetBool(offset);
+                            bValue = record.GetBool(index);
                             break;
                     }
                 }

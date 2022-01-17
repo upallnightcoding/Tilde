@@ -1,6 +1,7 @@
 ﻿using Tilde.script.nodes;
 using System;
 using Leo.script.nodes;
+using Tilde.script.symbol;
 
 namespace Tilde.script
 {
@@ -95,7 +96,7 @@ namespace Tilde.script
 
         public static Token CreateStringToken(string text) => (new Token(TokenType.STRING, text));
 
-        public static Token CreateKeyWordToken(string text) => (new Token(TokenType.KEYWORD, text));
+        public static Token CreateSymbolToken(string text) => (new Token(TokenType.SYMBOL, text));
 
         public static Token CreateCharToken(char character) => (new Token(character));
 
@@ -176,9 +177,9 @@ namespace Tilde.script
         /// CreateNodeValue() - 
         /// </summary>
         /// <returns></returns>
-        public Node CreateNodeValue()
+        public NodeValue CreateNodeValue()
         {
-            Node node = null;
+            NodeValue node = null;
 
             switch(type)
             {
@@ -197,8 +198,8 @@ namespace Tilde.script
                 case TokenType.BOOLEAN:
                     node = new NodeValue(bValue);
                     break;
-                case TokenType.KEYWORD:
-                    node = new NodeValue(sValue, VariableType.KEYWORD);
+                case TokenType.SYMBOL:
+                    node = new NodeValue(sValue, VariableType.SYMBOL);
                     break;
             }
 
@@ -261,9 +262,13 @@ namespace Tilde.script
 
         public bool IsRightParen() => (type == TokenType.RIGHT_PAREN);
 
-        public bool IsAKeyWord() => (type == TokenType.KEYWORD);
+        public bool IsASymbol() => (type == TokenType.SYMBOL);
 
         public bool IsAssign() => (type == TokenType.ASSIGN);
+
+        public bool IsLeftBracket() => (type == TokenType.LEFT_BRACKET);
+
+        public bool IsRightBracket() => (type == TokenType.RIGHT_BRACKET);
 
         /// <summary>
         /// IsOperator() - Returns a true if the token is a binary operator.  If

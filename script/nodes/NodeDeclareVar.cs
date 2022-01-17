@@ -1,8 +1,13 @@
 ﻿using Tilde.script.commands;
 using System;
+using Leo.script;
+using Tilde.script.symbol;
 
 namespace Tilde.script.nodes
 {
+    /// <summary>
+    /// NodeDeclareVar - 
+    /// </summary>
     class NodeDeclareVar : Node
     {
         private string variable = null;
@@ -11,20 +16,18 @@ namespace Tilde.script.nodes
 
         private Node initialize = null;
 
-        /*******************/
-        /*** Constructor ***/
-        /*******************/
+        private ArrayElement arrayElement = null;
 
-        public NodeDeclareVar(VariableType type, Token variable) : this(type, variable, null)
-        {
-            
-        }
+        /********************/
+        /*** Constructors ***/
+        /********************/
 
-        public NodeDeclareVar(VariableType type, Token variable, Node initialize)
+        public NodeDeclareVar(VariableType type, Token variable, ArrayElement arrayElement, Node initialize)
         {
             this.type = type;
             this.variable = variable.GetVariable();
             this.initialize = initialize;
+            this.arrayElement = arrayElement;
         }
 
         /************************/
@@ -38,9 +41,11 @@ namespace Tilde.script.nodes
         /// <returns></returns>
         public override NodeValue Execute(Context context)
         {
-            Console.WriteLine("Type: " + type + " - Variable: " + variable);
+            int size = (arrayElement == null) ? 1 : arrayElement.CalcSize(context);
 
-            context.GetSymbolTable().Declare(type, variable, 1);
+            Console.WriteLine("Type: " + type + " - Variable: " + variable + " Size: " + size);
+
+            context.GetSymbolTable().Declare(type, variable, arrayElement, context);
 
             if (initialize != null)
             {

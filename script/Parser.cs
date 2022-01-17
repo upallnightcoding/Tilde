@@ -101,6 +101,8 @@ namespace Tilde.script
             CreateSimpleTokens(')', ' ', TokenType.RIGHT_PAREN,     TokenType.NO_TOKEN);
             CreateSimpleTokens('{', ' ', TokenType.LEFT_BRACE,      TokenType.NO_TOKEN);
             CreateSimpleTokens('}', ' ', TokenType.RIGHT_BRACE,     TokenType.NO_TOKEN);
+            CreateSimpleTokens('[', ' ', TokenType.LEFT_BRACKET,    TokenType.NO_TOKEN);
+            CreateSimpleTokens(']', ' ', TokenType.RIGHT_BRACKET,   TokenType.NO_TOKEN);
 
             CreateSimpleTokens('+', ' ', TokenType.ADD,             TokenType.NO_TOKEN);
             CreateSimpleTokens('-', ' ', TokenType.SUBTRACT,        TokenType.NO_TOKEN);
@@ -115,6 +117,8 @@ namespace Tilde.script
             CreateSimpleTokens('|', '|', TokenType.NO_TOKEN,        TokenType.OR);
             CreateSimpleTokens('=', '=', TokenType.ASSIGN,          TokenType.EQ);
             CreateSimpleTokens('!', '=', TokenType.NOT,             TokenType.NE);
+
+            CreateSimpleTokens('~', ' ', TokenType.UNARY_MINUS,     TokenType.NO_TOKEN);
         }
 
         /// <summary>
@@ -216,7 +220,7 @@ namespace Tilde.script
                 character = GetNextChar();
             }
 
-            return (Token.CreateKeyWordToken(keyword.ToString()));
+            return (Token.CreateSymbolToken(keyword.ToString()));
         }
 
         /// <summary>

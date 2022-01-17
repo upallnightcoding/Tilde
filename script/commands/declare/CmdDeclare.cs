@@ -1,4 +1,7 @@
-﻿using Tilde.script.nodes;
+﻿using Leo.script;
+using System.Collections.Generic;
+using Tilde.script.nodes;
+using Tilde.script.symbol;
 
 namespace Tilde.script.commands.declare
 {
@@ -9,11 +12,14 @@ namespace Tilde.script.commands.declare
     {
         private VariableType type = VariableType.UNKNOWN;
 
+        private Expression expression = null;
+
         public CmdDeclare(string command) : base(command)
         {
-            Token token = Token.CreateKeyWordToken(command);
+            Token token = Token.CreateSymbolToken(command);
 
-            type = token.GetVariableType();
+            this.type = token.GetVariableType();
+            this.expression = new Expression();
         }
 
         /************************/
@@ -24,58 +30,45 @@ namespace Tilde.script.commands.declare
         {
             NodeDeclare nodeDeclare = new NodeDeclare(type);
 
-            Expression expression = new Expression();
-
             Token variable = new Token();
 
             while (!variable.IsEOS())
             {
+                Node initialize = null;
+
+                ArrayElement arrayElement = null;
+
                 variable = parser.GetToken(); 
 
                 Token token = parser.GetToken();
 
+                if (token.IsLeftBracket())
+                {
+                    arrayElement = new ArrayElement();
+
+                    while (!token.IsRightBracket())
+                    {
+                        arrayElement.Add(expression.Translate(parser));
+
+                        token = expression.LastToken;
+                    }
+
+                    token = parser.GetToken();
+                }
+
                 if (token.IsAssign())
                 {
-                    Node initialize = expression.Translate(parser);
+                    initialize = expression.Translate(parser);
 
-                    nodeDeclare.Add(new NodeDeclareVar(type, variable, initialize));
-
-                    if (expression.LastToken.IsEOS())
-                    {
-                        variable = expression.LastToken;
-                    } 
-                    else if (expression.LastToken.IsComma())
-                    {
-                        // Do Nothing
-                    }
+                    token = expression.LastToken;
                 } 
-                else if (token.IsComma()) 
-                {
-                    nodeDeclare.Add(new NodeDeclareVar(type, variable));
-                }
-                else if (token.IsEOS())
-                {
-                    variable = token;
-                }
+                
+                nodeDeclare.Add(new NodeDeclareVar(type, variable, arrayElement, initialize));
+
+                variable = token;
             }
 
             return (nodeDeclare);
-        }
-
-        /*************************/
-        /*** Private Functions ***/
-        /*************************/
-
-        private Token ReadNextToken(Parser parser)
-        {
-            Token token = parser.GetToken();
-
-            if (token.IsComma())
-            {
-                token = parser.GetToken();
-            }
-
-            return (token);
         }
     }
 }

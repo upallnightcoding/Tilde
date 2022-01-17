@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Leo.script;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tilde.script;
+using Tilde.script.commands;
 using Tilde.script.nodes;
 
 namespace Tilde.script.symbol
@@ -41,14 +43,24 @@ namespace Tilde.script.symbol
         }
 
         /// <summary>
-        /// Declare() - 
+        /// Declare() - Allows for the declaration of an variable as a scalar
+        /// or an array.  If the variable is a scalar the arrayElements
+        /// parameter should be set to null.  If the variable is an array,
+        /// the arrayElements object should contain the Nodes that represent
+        /// the array elements.
         /// </summary>
-        /// <param name="type"></param>
+        /// <param name="varType"></param>
         /// <param name="variable"></param>
-        /// <param name="size"></param>
-        public void Declare(VariableType type, string variable, int size)
+        /// <param name="arrayElement"></param>
+        /// <param name="context"></param>
+        public void Declare(
+            VariableType varType,
+            string variable,
+            ArrayElement arrayElement,
+            Context context
+        )
         {
-            Add(new SymbolTableRec(type, variable, size));
+            Add(new SymbolTableRec(varType, variable, arrayElement, context));
         }
 
         /// <summary>

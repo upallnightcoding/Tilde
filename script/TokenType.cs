@@ -43,17 +43,20 @@ namespace Tilde.script
         AND,
         OR,
         NOT,
+        UNARY_MINUS,
 
         NO_TOKEN,
 
         ASSIGN,
 
-        KEYWORD,
+        SYMBOL,
 
         LEFT_PAREN,
         RIGHT_PAREN,
         LEFT_BRACE,
         RIGHT_BRACE,
+        LEFT_BRACKET,
+        RIGHT_BRACKET,
         FIELD_SEPARATOR,    // Field separator with expressions
 
         EOS,                // End of Statement token

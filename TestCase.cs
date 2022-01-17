@@ -14,15 +14,18 @@ namespace Tilde
 {
     class TestCase
     {
-        public static SourceCode Case01()
+        public static SourceCode ArrayTest()
         {
             SourceCode source = new SourceCode();
 
             source.Add("program test {");
-            source.Add("    integer a = (1 + 2.2);");
-            source.Add("    print \"Value a1:  \", a ;");
-            source.Add("    a = 33 + 11;");
-            source.Add("    print \"Value a2:  \", a ;");
+            
+            source.Add("    integer x = 10, y = 2;");
+            source.Add("    integer b[x, y];");
+            //source.Add("    integer a = (1 + 2.2), b[x, y], c[3+1,4*2];");
+            //source.Add("    print \"Value a1:  \", a ;");
+            //source.Add("    a = 33 + 11;");
+            //source.Add("    print \"Value a2:  \", a ;");
             source.Add("}");
 
             return (source);

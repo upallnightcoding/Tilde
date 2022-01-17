@@ -1,4 +1,5 @@
 ﻿using Tilde.script.commands;
+using Tilde.script.symbol;
 
 namespace Tilde.script.nodes
 {
@@ -10,7 +11,7 @@ namespace Tilde.script.nodes
         /*** Constructor ***/
         /*******************/
 
-        public NodeDeclare(VariableType type)
+        public NodeDeclare(VariableType type) // TODO : Remove this type parameter
         {
             this.type = type;
         }
