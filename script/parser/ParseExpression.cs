@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using Tilde.script.commands;
 using Tilde.script.nodes;
 
-namespace Tilde.script
+namespace Tilde.script.parser
 {
-    class Expression
+    class ParseExpression 
     {
         public Token LastToken { get; set; } = null;
 
@@ -20,7 +20,7 @@ namespace Tilde.script
         /*** Constructor ***/
         /*******************/
 
-        public Expression()
+        public ParseExpression()
         {
             
         }
@@ -177,7 +177,7 @@ namespace Tilde.script
             {
                 ArrayElement arrayElement = new ArrayElement();
 
-                Expression expression = new Expression();
+                ParseExpression expression = new ParseExpression();
 
                 while (!token.IsRightBracket())
                 {
@@ -186,7 +186,7 @@ namespace Tilde.script
                     token = expression.LastToken;
                 }
 
-                value.Set(arrayElement);
+                value.ArrayElements = arrayElement;
 
                 token = parser.GetToken();
             }

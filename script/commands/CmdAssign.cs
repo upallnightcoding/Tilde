@@ -1,11 +1,8 @@
 ﻿using Leo.script.nodes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Leo.script.parser;
 using Tilde.script;
 using Tilde.script.nodes;
+using Tilde.script.parser;
 
 namespace Leo.script.commands
 {
@@ -19,7 +16,7 @@ namespace Leo.script.commands
 
         private const string COMMAND = "ASSIGN";
 
-        private Expression expression = null;
+        private ParserTools parserTools = null;
 
         /*******************/
         /*** Constructor ***/
@@ -27,7 +24,7 @@ namespace Leo.script.commands
 
         public CmdAssign() : base(COMMAND)
         {
-            expression = new Expression();
+            parserTools = new ParserTools();
         }
 
         /************************/
@@ -36,12 +33,13 @@ namespace Leo.script.commands
 
         public override Node Translate(Parser parser)
         {
-            // Skip assignment token
-            parser.GetToken();
+            Token token = null;
 
             NodeAssign nodeAssign = new NodeAssign(Variable);
 
-            nodeAssign.Add(expression.Translate(parser));
+            nodeAssign.ArrayElements = parserTools.GetArrayElements(parser, out token);
+
+            nodeAssign.Add(parserTools.GetExpression(parser, out _));
 
             return (nodeAssign);
         }

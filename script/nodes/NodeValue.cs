@@ -11,6 +11,8 @@ namespace Tilde.script.nodes
     /// </summary>
     class NodeValue : Node
     {
+        public ArrayElement ArrayElements { get; set; } = null;
+
         // Containers for each Tilde primitive type
         //-----------------------------------------
         private long iValue = 0;
@@ -23,7 +25,6 @@ namespace Tilde.script.nodes
         //-----------------------
         private VariableType type = VariableType.UNKNOWN;
 
-        private ArrayElement arrayElement = null;
 
         /*******************/
         /*** Constructor ***/
@@ -81,15 +82,6 @@ namespace Tilde.script.nodes
         public bool IsChar() => (type == VariableType.CHARACTER);
 
         public bool IsBoolean() => (type == VariableType.BOOLEAN);
-
-        /************************/
-        /*** Public Functions ***/
-        /************************/
-
-        public void Set(ArrayElement arrayElement)
-        {
-            this.arrayElement = arrayElement;
-        }
 
         /****************************/
         /*** Conversion Functions ***/
@@ -183,7 +175,7 @@ namespace Tilde.script.nodes
             return (bValue);
         }
 
-        public override NodeValue Execute(Context context)
+        public override NodeValue Evaluate(Context context)
         {
             NodeValue value = this;
 
@@ -193,7 +185,7 @@ namespace Tilde.script.nodes
 
                 if (record != null)
                 {
-                    int index = 0;
+                    int index = (ArrayElements == null) ? 0 : ArrayElements.CalcIndex(context);
 
                     type = record.VarType;
 

@@ -92,8 +92,10 @@
     <Compile Include="script\commands\declare\CmdDeclare.cs" />
     <Compile Include="script\commands\Context.cs" />
     <Compile Include="script\commands\declare\CmdString.cs" />
+    <Compile Include="script\parser\ParseArrayElements.cs" />
+    <Compile Include="script\parser\ParserTools.cs" />
     <Compile Include="script\symbol\DesignationType.cs" />
-    <Compile Include="script\Expression.cs" />
+    <Compile Include="script\parser\ParseExpression.cs" />
     <Compile Include="script\nodes\Node.cs" />
     <Compile Include="script\nodes\NodeAdd.cs" />
     <Compile Include="script\nodes\NodeAssign.cs" />
@@ -106,7 +108,7 @@
     <Compile Include="script\nodes\NodeCodeBlock.cs" />
     <Compile Include="script\nodes\NodePrint.cs" />
     <Compile Include="script\nodes\NodeValue.cs" />
-    <Compile Include="script\Parser.cs" />
+    <Compile Include="script\parser\Parser.cs" />
     <Compile Include="script\SimpleToken.cs" />
     <Compile Include="script\SourceCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -119,8 +121,8 @@
     <Compile Include="script\symbol\SymbolTable.cs" />
     <Compile Include="script\symbol\SymbolTableRec.cs" />
     <Compile Include="script\TildeScript.cs" />
-    <Compile Include="script\Token.cs" />
-    <Compile Include="script\TokenType.cs" />
+    <Compile Include="script\parser\Token.cs" />
+    <Compile Include="script\parser\TokenType.cs" />
     <Compile Include="script\symbol\VariableType.cs" />
     <Compile Include="render\entity\Shader.cs" />
     <Compile Include="render\entity\Sprite.cs" />

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tilde.script.parser;
+using Leo.script.parser;
 
 namespace Tilde.script
 {
@@ -15,7 +17,7 @@ namespace Tilde.script
     {
         private const string COMMAND = "PRINT";
 
-        private Expression expression = null;
+        private ParserTools parserTools = null;
 
         /*******************/
         /*** Constructor ***/
@@ -23,7 +25,7 @@ namespace Tilde.script
 
         public CmdPrint() : base(COMMAND)
         {
-            expression = new Expression();
+            parserTools = new ParserTools();
         }
 
         /************************/
@@ -32,17 +34,13 @@ namespace Tilde.script
 
         public override Node Translate(Parser parser)
         {
-            Token lastExpToken = Token.CreateBeginExpMarker();
+            Token lastExpToken = Token.CreateBeginExpMarker();  //TODO : Change this for a new Token();
 
             NodePrint printNode = new NodePrint();
 
             while (!lastExpToken.IsEOS())
             {
-                Node node = expression.Translate(parser);
-
-                printNode.Add(node);
-
-                lastExpToken = expression.LastToken;
+                printNode.Add(parserTools.GetExpression(parser, out lastExpToken));
             }
 
             return (printNode);

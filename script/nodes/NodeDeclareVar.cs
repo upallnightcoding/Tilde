@@ -2,6 +2,7 @@
 using System;
 using Leo.script;
 using Tilde.script.symbol;
+using Tilde.script.parser;
 
 namespace Tilde.script.nodes
 {
@@ -39,7 +40,7 @@ namespace Tilde.script.nodes
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public override NodeValue Execute(Context context)
+        public override NodeValue Evaluate(Context context)
         {
             int size = (arrayElement == null) ? 1 : arrayElement.CalcSize(context);
 
@@ -49,7 +50,7 @@ namespace Tilde.script.nodes
 
             if (initialize != null)
             {
-                NodeValue value = initialize.Execute(context);
+                NodeValue value = initialize.Evaluate(context);
 
                 context.GetSymbolTable().Assign(variable, 0, value);
             }

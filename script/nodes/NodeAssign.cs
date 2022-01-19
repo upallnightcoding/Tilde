@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Tilde.script;
 using Tilde.script.commands;
 using Tilde.script.nodes;
+using Tilde.script.parser;
 
 namespace Leo.script.nodes
 {
@@ -13,16 +14,20 @@ namespace Leo.script.nodes
     {
         private string variable = null;
 
+        public ArrayElement ArrayElements { get; set; } = null;
+
         public NodeAssign(Token variable)
         {
             this.variable = variable.GetVariable();
         }
 
-        public override NodeValue Execute(Context context)
+        public override NodeValue Evaluate(Context context)
         {
-            NodeValue expression = (NodeValue)(GetNode(0).Execute(context));
+            NodeValue expression = GetNode(0).Evaluate(context);
 
-            context.GetSymbolTable().Assign(variable, 0, expression);
+            int index = ArrayElements.CalcIndex(context);
+
+            context.GetSymbolTable().Assign(variable, index, expression);
 
             return (null);
         }

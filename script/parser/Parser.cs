@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tilde.script
+namespace Tilde.script.parser
 {
     class Parser
     {
@@ -79,12 +79,20 @@ namespace Tilde.script
         /*** Private Functions ***/
         /*************************/
 
+        /// <summary>
+        /// GetChar() - Returns the single character that is determine
+        /// between single quotes.  This function then moves off of the
+        /// active character and then moves off of the ending single 
+        /// quote.
+        /// </summary>
+        /// <returns></returns>
         private Token GetChar()
         {
+            // Return the single character
             char character = GetNextChar();
 
-            MoveNextChar();
-            MoveNextChar();
+            MoveNextChar();     // Move off of active character
+            MoveNextChar();     // Move off of single quote
 
             return (Token.CreateCharToken(character));
         }
@@ -156,11 +164,11 @@ namespace Tilde.script
 
             if (simpleTokens.TryGetValue(character, out type))
             {
-                if (type.isFirstNoToken())
+                if (type.IsFirstNoToken())
                 {
                     character = GetNextChar();
 
-                    if (type.isEqualSecondToken(character))
+                    if (type.IsEqualSecondToken(character))
                     {
                         token = new Token(type.SecondTokenType);
 
@@ -171,7 +179,7 @@ namespace Tilde.script
                         token = new Token();
                     }
                 }
-                else if (type.isSecondNoToken())
+                else if (type.IsSecondNoToken())
                 {
                     token = new Token(type.FirstTokenType);
 
@@ -181,7 +189,7 @@ namespace Tilde.script
                 {
                     character = GetNextChar();
 
-                    if (type.isEqualSecondToken(character))
+                    if (type.IsEqualSecondToken(character))
                     {
                         token = new Token(type.SecondTokenType);
 

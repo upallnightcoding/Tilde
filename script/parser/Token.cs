@@ -3,7 +3,7 @@ using System;
 using Leo.script.nodes;
 using Tilde.script.symbol;
 
-namespace Tilde.script
+namespace Tilde.script.parser
 {
     /// <summary>
     /// Adding New Binary Operators - Update the following functions

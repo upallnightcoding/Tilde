@@ -64,10 +64,33 @@ namespace Leo.script
 
             foreach (Node element in arrayElement)
             {
-                size *= (int) element.Execute(context).GetInteger();
+                size *= (int) element.Evaluate(context).GetInteger();
             }
 
             return (size);
+        }
+
+        /// <summary>
+        /// CalcIndex() - 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public int CalcIndex(Context context)
+        {
+            int index = -1;
+
+            switch(arrayElement.Count())
+            {
+                case 1:
+                    index = (int) arrayElement.ElementAt<Node>(0).Evaluate(context).GetInteger();
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+            }
+
+            return (index);
         }
     }
 }

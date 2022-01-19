@@ -9,7 +9,7 @@ namespace Tilde.script.nodes
     {
         private List<Node> nodeList = null;
 
-        public abstract NodeValue Execute(Context context);
+        public abstract NodeValue Evaluate(Context context);
 
         /*******************/
         /*** Constructor ***/

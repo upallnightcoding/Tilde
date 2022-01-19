@@ -1,5 +1,6 @@
 ﻿using Tilde.script.commands;
 using Tilde.script.nodes;
+using Tilde.script.parser;
 
 namespace Tilde.script
 {
@@ -26,7 +27,7 @@ namespace Tilde.script
 
             Context context = new Context();
 
-            node.Execute(context);
+            node.Evaluate(context);
         }
     }
 }

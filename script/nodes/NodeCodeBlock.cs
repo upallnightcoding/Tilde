@@ -4,10 +4,10 @@ namespace Tilde.script.nodes
 {
     class NodeCodeBlock : Node
     {
-        public override NodeValue Execute(Context context)
+        public override NodeValue Evaluate(Context context)
         {
             foreach (Node node in GetNodeList()) {
-                node.Execute(context);
+                node.Evaluate(context);
             }
 
             return (null);

@@ -1,6 +1,8 @@
 ﻿using Leo.script;
+using Leo.script.parser;
 using System.Collections.Generic;
 using Tilde.script.nodes;
+using Tilde.script.parser;
 using Tilde.script.symbol;
 
 namespace Tilde.script.commands.declare
@@ -12,14 +14,18 @@ namespace Tilde.script.commands.declare
     {
         private VariableType type = VariableType.UNKNOWN;
 
-        private Expression expression = null;
+        private ParserTools parserTools = null;
+
+        /*******************/
+        /*** Constructor ***/
+        /*******************/
 
         public CmdDeclare(string command) : base(command)
         {
             Token token = Token.CreateSymbolToken(command);
 
             this.type = token.GetVariableType();
-            this.expression = new Expression();
+            this.parserTools = new ParserTools();
         }
 
         /************************/
@@ -31,36 +37,19 @@ namespace Tilde.script.commands.declare
             NodeDeclare nodeDeclare = new NodeDeclare(type);
 
             Token variable = new Token();
+            Token token = null;
 
             while (!variable.IsEOS())
             {
                 Node initialize = null;
 
-                ArrayElement arrayElement = null;
+                variable = parser.GetToken();
 
-                variable = parser.GetToken(); 
-
-                Token token = parser.GetToken();
-
-                if (token.IsLeftBracket())
-                {
-                    arrayElement = new ArrayElement();
-
-                    while (!token.IsRightBracket())
-                    {
-                        arrayElement.Add(expression.Translate(parser));
-
-                        token = expression.LastToken;
-                    }
-
-                    token = parser.GetToken();
-                }
+                ArrayElement arrayElement = parserTools.GetArrayElements(parser, out token);
 
                 if (token.IsAssign())
                 {
-                    initialize = expression.Translate(parser);
-
-                    token = expression.LastToken;
+                    initialize = parserTools.GetExpression(parser, out token);
                 } 
                 
                 nodeDeclare.Add(new NodeDeclareVar(type, variable, arrayElement, initialize));

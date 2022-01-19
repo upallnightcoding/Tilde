@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tilde.script;
+using Tilde.script.parser;
 
 namespace Leo.script
 {
@@ -32,10 +33,10 @@ namespace Leo.script
             this.SecondTokenType = secondTokenType;
         }
 
-        public bool isFirstNoToken() => (FirstTokenType == TokenType.NO_TOKEN);
+        public bool IsFirstNoToken() => (FirstTokenType == TokenType.NO_TOKEN);
 
-        public bool isSecondNoToken() => (SecondTokenType == TokenType.NO_TOKEN);
+        public bool IsSecondNoToken() => (SecondTokenType == TokenType.NO_TOKEN);
 
-        public bool isEqualSecondToken(char character) => (character == secondToken);
+        public bool IsEqualSecondToken(char character) => (character == secondToken);
     }
 }

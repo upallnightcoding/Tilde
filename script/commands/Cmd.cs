@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tilde.script.nodes;
+using Tilde.script.parser;
 
 namespace Tilde.script
 {

@@ -16,12 +16,12 @@ namespace Leo.script.nodes
             Add(vRight);
         }
 
-        public override NodeValue Execute(Context context)
+        public override NodeValue Evaluate(Context context)
         {
             NodeValue value = null;
 
-            NodeValue vLeft = (NodeValue)(GetNode(0).Execute(context));
-            NodeValue vRight = (NodeValue)(GetNode(1).Execute(context));
+            NodeValue vLeft = (NodeValue)(GetNode(0).Evaluate(context));
+            NodeValue vRight = (NodeValue)(GetNode(1).Evaluate(context));
 
             if (vLeft.IsFloat() && vRight.IsFloat())
             {

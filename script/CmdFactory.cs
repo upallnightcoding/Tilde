@@ -2,6 +2,7 @@
 using Tilde.script.commands.declare;
 using System.Collections.Generic;
 using Leo.script.commands;
+using Tilde.script.parser;
 
 namespace Tilde.script
 {

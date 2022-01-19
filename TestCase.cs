@@ -14,6 +14,18 @@ namespace Tilde
 {
     class TestCase
     {
+        public static string Source01 = @"
+            integer x = 10, y = 55;     
+            print x, y;                 
+        ";
+
+        public static SourceCode Code()
+        {
+            SourceCode source = new SourceCode(Source01);
+
+            return (source);
+        }
+
         public static SourceCode ArrayTest()
         {
             SourceCode source = new SourceCode();
@@ -21,7 +33,14 @@ namespace Tilde
             source.Add("program test {");
             
             source.Add("    integer x = 10, y = 2;");
-            source.Add("    integer b[x, y];");
+            source.Add("    integer b[x, y], a[20];");
+            source.Add("    print a[10];");
+            source.Add("    a[0] = 10;");
+            source.Add("    a[2] = 20;");
+            source.Add("    a[3] = 30;");
+            source.Add("    print \"a[0]  \", a[0] ;");
+            source.Add("    print \"a[2]  \", a[2] ;");
+            source.Add("    print \"a[3]  \", a[3] ;");
             //source.Add("    integer a = (1 + 2.2), b[x, y], c[3+1,4*2];");
             //source.Add("    print \"Value a1:  \", a ;");
             //source.Add("    a = 33 + 11;");

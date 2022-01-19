@@ -33,6 +33,18 @@ namespace Tilde
             Reset();
         }
 
+        public SourceCode(string source)
+        {
+            sourceCode = new List<string>();
+
+            foreach (string line in source.Split('\n'))
+            {
+                Add(line);
+            }
+
+            Reset();
+        }
+
         /************************/
         /*** Public Functions ***/
         /************************/

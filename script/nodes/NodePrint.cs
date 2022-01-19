@@ -8,12 +8,12 @@ namespace Tilde.script.nodes
         /// <summary>
         /// Execute() - 
         /// </summary>
-        public override NodeValue Execute(Context context)
+        public override NodeValue Evaluate(Context context)
         {
 
             foreach(Node node in GetNodeList())
             {
-                Node value = node.Execute(context);
+                Node value = node.Evaluate(context);
 
                 Console.Write(((NodeValue)value).GetString());
             }
