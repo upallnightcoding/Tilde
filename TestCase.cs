@@ -1,10 +1,4 @@
 ﻿using Leo.render.behavior.action;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tilde;
 using Tilde.render.behavior;
 using Tilde.render.behavior.action;
 using Tilde.render.entity;
