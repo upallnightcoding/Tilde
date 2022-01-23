@@ -1,4 +1,5 @@
 ﻿using Leo.script;
+using Leo.script.symbol;
 using Tilde.script.commands;
 using Tilde.script.symbol;
 
@@ -11,7 +12,7 @@ namespace Tilde.script.nodes
     /// </summary>
     class NodeValue : Node
     {
-        public ArrayElement ArrayElements { get; set; } = null;
+        public ArrayElements Elements { get; set; } = null;
 
         // Containers for each Tilde primitive type
         //-----------------------------------------
@@ -24,7 +25,6 @@ namespace Tilde.script.nodes
         // Default NodeValue Type
         //-----------------------
         private VariableType type = VariableType.UNKNOWN;
-
 
         /*******************/
         /*** Constructor ***/
@@ -179,13 +179,13 @@ namespace Tilde.script.nodes
         {
             NodeValue value = this;
 
-            if (type == VariableType.SYMBOL)
+            if (type == VariableType.SYMBOL) // TODO : This may not work if placed in a loop
             {
-                SymbolTableRec record = context.GetSymbolTable().Find(sValue);
+                SymbolTableRec record = context.GetSymbolTable().Find(sValue); // TODO : this should be a dirty get
 
                 if (record != null)
                 {
-                    int index = (ArrayElements == null) ? 0 : ArrayElements.CalcIndex(context);
+                    int index = record.CalcIndex(Elements, context);
 
                     type = record.VarType;
 

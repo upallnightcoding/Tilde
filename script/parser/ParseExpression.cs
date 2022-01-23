@@ -1,4 +1,5 @@
 ﻿using Leo.script;
+using Leo.script.symbol;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -175,18 +176,18 @@ namespace Tilde.script.parser
 
             if (token.IsLeftBracket())
             {
-                ArrayElement arrayElement = new ArrayElement();
+                ArrayElements arrayElements = new ArrayElements();
 
                 ParseExpression expression = new ParseExpression();
 
                 while (!token.IsRightBracket())
                 {
-                    arrayElement.Add(expression.Translate(parser));
+                    arrayElements.Add(expression.Translate(parser));
 
                     token = expression.LastToken;
                 }
 
-                value.ArrayElements = arrayElement;
+                value.Elements = arrayElements;
 
                 token = parser.GetToken();
             }

@@ -1,4 +1,5 @@
 ﻿using Leo.script;
+using Leo.script.symbol;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,29 +57,37 @@ namespace Tilde.script.symbol
         public void Declare(
             VariableType varType,
             string variable,
-            ArrayElement arrayElement,
+            ArrayElements arrayElements,
             Context context
         )
         {
-            Add(new SymbolTableRec(varType, variable, arrayElement, context));
+            Add(new SymbolTableRec(varType, variable, arrayElements, context));
         }
 
         /// <summary>
-        /// Assign() - 
+        /// Assign() - Finds the variable record in the symbol table and 
+        /// assigns the value at the element position.  The context object
+        /// is needed the calculate the actual element values.
         /// </summary>
         /// <param name="variable"></param>
-        /// <param name="offset"></param>
+        /// <param name="elements"></param>
         /// <param name="value"></param>
-        public void Assign(string variable, int offset, NodeValue value)
+        /// <param name="context"></param>
+        public void Assign(string variable, ArrayElements elements, NodeValue value, Context context)
         {
             SymbolTableRec record = Find(variable);
 
             if (record != null)
             {
-                record.Assign(offset, value);
+                record.Assign(elements, value, context);
             }
         }
 
+        /// <summary>
+        /// Find() - 
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <returns></returns>
         public SymbolTableRec Find(string variable)
         {
             SymbolTableRec record = null;
@@ -91,9 +100,9 @@ namespace Tilde.script.symbol
             return (record);
         }
 
-        /**************************/
-        /*** Parivate Functions ***/
-        /**************************/
+        /*************************/
+        /*** Private Functions ***/
+        /*************************/
 
         /// <summary>
         /// Add() - Addres a symbol table record to the current scope level.

@@ -3,6 +3,9 @@ using Tilde.script.symbol;
 
 namespace Tilde.script.nodes
 {
+    /// <summary>
+    /// NodeDeclare
+    /// </summary>
     class NodeDeclare : Node
     {
         private VariableType type = VariableType.UNKNOWN;
@@ -15,6 +18,10 @@ namespace Tilde.script.nodes
         {
             this.type = type;
         }
+
+        /************************/
+        /*** Public Functions ***/
+        /************************/
 
         public override NodeValue Evaluate(Context context)
         {

@@ -5,10 +5,18 @@ using Tilde.script.commands;
 
 namespace Tilde.script.nodes
 {
+    /// <summary>
+    ///  Node - Is the base class of all programming command nodes.  It contains
+    ///  of list of nodes that are the children of all programming command nodes.
+    ///  Each command will have its own means of evaluating a programming 
+    ///  command node.  
+    /// </summary>
     abstract class Node
     {
+        // List of node objects, these are the children of a programming node
         private List<Node> nodeList = null;
 
+        // Means of evaluating/executing a programming command node
         public abstract NodeValue Evaluate(Context context);
 
         /*******************/
@@ -24,6 +32,10 @@ namespace Tilde.script.nodes
         /*** Public Functions ***/
         /************************/
 
+        /// <summary>
+        /// Add() - Adds a new node to the node list.
+        /// </summary>
+        /// <param name="node"></param>
         public void Add(Node node)
         {
             if (node != null)
@@ -37,13 +49,14 @@ namespace Tilde.script.nodes
         /***************************/
 
         /// <summary>
-        /// GetNode() - Return a node from a given index in the nodelist.
+        /// GetNode() - Returns the ith node in the node list.  If the node
+        /// does not exist, an exception is thrown to the caller.
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
         protected Node GetNode(int index)
         {
-            return (nodeList.ElementAt(index));
+            return (nodeList[index]);
         }
 
         /// <summary>

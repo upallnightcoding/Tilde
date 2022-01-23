@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Leo.script.symbol;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ namespace Leo.script.parser
     class ParseArrayElements
     {
         private Token token = null;
-        private ArrayElement arrayElement = null;
+        private ArrayElements arrayElements = null;
         private ParseExpression expression = null;
 
         /*******************/
@@ -27,17 +28,26 @@ namespace Leo.script.parser
         /*** Public FUnctions ***/
         /************************/
 
-        public ArrayElement Translate(Parser parser)
+        /// <summary>
+        /// Translate() - Read the leading token and determines if it is a
+        /// left bracket.  If it is, then this is an array definition.
+        /// Each element of the array definition is translated into a node
+        /// and kept as an array element.  Parsing continues until a right
+        /// brace is parsed marking the end of the array definition.
+        /// </summary>
+        /// <param name="parser"></param>
+        /// <returns></returns>
+        public ArrayElements Translate(Parser parser)
         {
             token = parser.GetToken();  
 
             if (token.IsLeftBracket())
             {
-                arrayElement = new ArrayElement();
+                arrayElements = new ArrayElements();
 
                 while (!token.IsRightBracket())
                 {
-                    arrayElement.Add(expression.Translate(parser));
+                    arrayElements.Add(expression.Translate(parser));
 
                     token = expression.LastToken;
                 }
@@ -45,7 +55,7 @@ namespace Leo.script.parser
                 token = parser.GetToken();
             }
 
-            return (arrayElement);
+            return (arrayElements);
         }
 
         public Token LeadingToken()

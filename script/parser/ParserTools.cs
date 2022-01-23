@@ -1,15 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Leo.script.symbol;
 using Tilde.script.nodes;
 using Tilde.script.parser;
 
 namespace Leo.script.parser
 {
+    /// <summary>
+    /// ParserTools - This class contains tools that assist with parsing.
+    /// </summary>
     class ParserTools
     {
+        /// <summary>
+        /// GetExpression() - 
+        /// </summary>
+        /// <param name="parser"></param>
+        /// <param name="LastExpToken"></param>
+        /// <returns></returns>
         public Node GetExpression(Parser parser, out Token LastExpToken)
         {
             ParseExpression expression = new ParseExpression();
@@ -21,11 +26,17 @@ namespace Leo.script.parser
             return (node);
         }
 
-        public ArrayElement GetArrayElements(Parser parser, out Token NextLeadingToken)
+        /// <summary>
+        /// GetArrayElements() - 
+        /// </summary>
+        /// <param name="parser"></param>
+        /// <param name="NextLeadingToken"></param>
+        /// <returns></returns>
+        public ArrayElements GetArrayElements(Parser parser, out Token NextLeadingToken)
         {
             ParseArrayElements parseArrayElements = new ParseArrayElements();
 
-            ArrayElement arrayElement = parseArrayElements.Translate(parser);
+            ArrayElements arrayElement = parseArrayElements.Translate(parser);
 
             NextLeadingToken = parseArrayElements.LeadingToken();
 

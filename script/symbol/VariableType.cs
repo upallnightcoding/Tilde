@@ -11,7 +11,7 @@ namespace Tilde.script.symbol
         INTEGER,
         FLOAT,
         STRING,
-        CHARACTER,
+        CHARACTER,  // TODO : Remove the character type
         BOOLEAN,
 
         SYMBOL,

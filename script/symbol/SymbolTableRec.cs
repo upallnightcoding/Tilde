@@ -1,4 +1,6 @@
 ﻿using Leo.script;
+using Leo.script.symbol;
+using System.Collections.Generic;
 using Tilde.script.commands;
 using Tilde.script.nodes;
 
@@ -12,18 +14,24 @@ namespace Tilde.script.symbol
     class SymbolTableRec
     {
         // Variable Name, all entries require a name
-        public string Variable { get; set; } = null;
+        public string Variable { get; private set; } = null;
 
         // Variable Type
-        public VariableType VarType { get; set; } = VariableType.UNKNOWN;
+        public VariableType VarType { get; private set; } = VariableType.UNKNOWN;
 
         // Variable Designation Type
-        public DesignationType DesigType { get; set; } = DesignationType.UNKNOWN;
+        private DesignationType desigType = DesignationType.UNKNOWN;
 
-        // Variable Size, number of variable elements
-        private int Size { get; set; } = -1;
+        // Array elements size defined during declaration
+        private ArrayElements arraySize = null;
 
-        // Variable Values
+        // Calculated size of each array element if defined
+        private List<int> arrayElementSize = null;
+
+        // Size of data buffer used to hold variable values
+        private int dataBufferSize = -1;
+
+        // Data buffers to hold variable values
         private long[] iValue = null;
         private string[] sValue = null;
         private double[] fValue = null;
@@ -37,66 +45,79 @@ namespace Tilde.script.symbol
         public SymbolTableRec(
             VariableType varType, 
             string variable, 
-            ArrayElement arrayElement, 
+            ArrayElements arraySize, 
             Context context
         )
         {
+            // Define the variable type and name
+            //----------------------------------
             this.VarType = varType;
             this.Variable = variable;
 
-            if (arrayElement == null)
+            this.arraySize = arraySize;
+
+            // Define the variable as either a scalar or array.
+            //-------------------------------------------------
+            if (variableIsScalar())
             {
-                this.DesigType = DesignationType.VARIABLE;
-                this.Size = 1;
+                this.desigType = DesignationType.VARIABLE;
+                this.dataBufferSize = 1;
             } else
             {
-                this.DesigType = DesignationType.ARRAY;
-                this.Size = arrayElement.CalcSize(context);
+                this.desigType = DesignationType.ARRAY;
+                CalcArraySize(context);
             }
 
+            // Setup buffers for whatever type of data is being declared.
+            //-----------------------------------------------------------
             switch (VarType)
             {
                 case VariableType.INTEGER:
-                    iValue = new long[Size];
+                    iValue = new long[dataBufferSize];
                     break;
                 case VariableType.STRING:
-                    sValue = new string[Size];
+                    sValue = new string[dataBufferSize];
                     break;
                 case VariableType.FLOAT:
-                    fValue = new double[Size];
+                    fValue = new double[dataBufferSize];
                     break;
                 case VariableType.CHARACTER:
-                    cValue = new char[Size];
+                    cValue = new char[dataBufferSize];
                     break;
                 case VariableType.BOOLEAN:
-                    bValue = new bool[Size];
+                    bValue = new bool[dataBufferSize];
                     break;
             }
         }
 
         /// <summary>
-        /// Assign() - 
+        /// Assign() - Uses the array elements to determine the position to 
+        /// assign the node value.  The context object is needed to calculate
+        /// the actual element values.
         /// </summary>
-        /// <param name="offset"></param>
+        /// <param name="elements"></param>
         /// <param name="value"></param>
-        public void Assign(int offset, NodeValue value)
+        /// <param name="context"></param>
+        public void Assign(ArrayElements elements, NodeValue value, Context context)
         {
+            int index = CalcIndex(elements, context);
+
             switch (VarType)
             {
                 case VariableType.INTEGER:
-                    iValue[offset] = value.GetInteger();
+                    iValue[index] = value.GetInteger();
                     break;
                 case VariableType.STRING:
-                    sValue[offset] = value.GetString();
+                    sValue[index] = value.GetString();
                     break;
                 case VariableType.FLOAT:
-                    fValue[offset] = value.GetFloat();
+                    fValue[index] = value.GetFloat();
                     break;
                 case VariableType.CHARACTER:
-                    cValue[offset] = value.GetChar();
+                    cValue[index] = value.GetChar();
                     break;
                 case VariableType.BOOLEAN:
-                    bValue[offset] = value.GetBoolean();
+                    bValue[index] = value.GetBoolean();
                     break;
             }
         }
@@ -114,5 +135,85 @@ namespace Tilde.script.symbol
         public char GetChar(int offset) => cValue[offset];
 
         public bool GetBool(int offset) => bValue[offset];
+
+        /// <summary>
+        /// CalcIndex() - 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public int CalcIndex(ArrayElements elements, Context context)
+        {
+            int index = -1;
+
+            if (variableIsScalar())
+            {
+                index = 0;
+            }
+            else
+            {
+                switch (elements.nOfElements())
+                {
+                    case 1:
+                        {
+                            index = (int)elements.AllElements[0].Evaluate(context).GetInteger();
+                        }
+                        break;
+                    case 2:
+                        {
+                            int n = arrayElementSize[1];
+                            int i = (int)elements.AllElements[0].Evaluate(context).GetInteger();
+                            int j = (int)elements.AllElements[1].Evaluate(context).GetInteger();
+                            index = i * n + j;
+                        }
+                        break;
+                    case 3:
+                        {
+                            int p = arrayElementSize[2];
+                            int n = arrayElementSize[1];
+                            int i = (int)elements.AllElements[0].Evaluate(context).GetInteger();
+                            int j = (int)elements.AllElements[1].Evaluate(context).GetInteger();
+                            int k = (int)elements.AllElements[2].Evaluate(context).GetInteger();
+                            index = i * n * p + j * p + k;
+                        }
+                        break;
+                }
+            }
+
+            return (index);
+        }
+
+        /*************************/
+        /*** Private Functions ***/
+        /*************************/
+
+        private bool variableIsScalar()
+        {
+            return (arraySize == null);
+        }
+
+        /// <summary>
+        /// CalcArraySize() - Calculates the size of the array based on the elements
+        /// of the array declaration.  If the variable is a scalar, this 
+        /// function should never be invoked.  The dataBufferSize will contain the
+        /// total size of the array and the arrayElementSize list will contain the
+        /// size of each element.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        private void CalcArraySize(Context context)
+        {
+            dataBufferSize = 1;
+
+            arrayElementSize = new List<int>();
+
+            foreach (Node element in arraySize.AllElements)
+            {
+                int elementSize = (int)element.Evaluate(context).GetInteger();
+
+                arrayElementSize.Add(elementSize);
+
+                dataBufferSize *= elementSize;
+            }
+        }
     }
 }

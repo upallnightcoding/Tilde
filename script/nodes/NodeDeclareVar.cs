@@ -3,6 +3,7 @@ using System;
 using Leo.script;
 using Tilde.script.symbol;
 using Tilde.script.parser;
+using Leo.script.symbol;
 
 namespace Tilde.script.nodes
 {
@@ -17,18 +18,18 @@ namespace Tilde.script.nodes
 
         private Node initialize = null;
 
-        private ArrayElement arrayElement = null;
+        private ArrayElements arrayElements = null;
 
         /********************/
         /*** Constructors ***/
         /********************/
 
-        public NodeDeclareVar(VariableType type, Token variable, ArrayElement arrayElement, Node initialize)
+        public NodeDeclareVar(VariableType type, Token variable, ArrayElements arrayElements, Node initialize)
         {
             this.type = type;
             this.variable = variable.GetVariable();
             this.initialize = initialize;
-            this.arrayElement = arrayElement;
+            this.arrayElements = arrayElements;
         }
 
         /************************/
@@ -36,23 +37,19 @@ namespace Tilde.script.nodes
         /************************/
 
         /// <summary>
-        /// Execute() - 
+        /// Execute() - Declares a variable in the symbol table.
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
         public override NodeValue Evaluate(Context context)
         {
-            int size = (arrayElement == null) ? 1 : arrayElement.CalcSize(context);
-
-            Console.WriteLine("Type: " + type + " - Variable: " + variable + " Size: " + size);
-
-            context.GetSymbolTable().Declare(type, variable, arrayElement, context);
+            context.GetSymbolTable().Declare(type, variable, arrayElements, context);
 
             if (initialize != null)
             {
                 NodeValue value = initialize.Evaluate(context);
 
-                context.GetSymbolTable().Assign(variable, 0, value);
+                context.GetSymbolTable().Assign(variable, null, value, context);
             }
 
             return (null);

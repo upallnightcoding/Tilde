@@ -79,7 +79,6 @@
     <Compile Include="render\entity\transform\Translate.cs" />
     <Compile Include="render\scene\MainLoop.cs" />
     <Compile Include="render\scene\Scene.cs" />
-    <Compile Include="script\ArrayElement.cs" />
     <Compile Include="script\CmdFactory.cs" />
     <Compile Include="script\commands\CmdAssign.cs" />
     <Compile Include="script\commands\CmdCodeBlock.cs" />
@@ -94,6 +93,7 @@
     <Compile Include="script\commands\declare\CmdString.cs" />
     <Compile Include="script\parser\ParseArrayElements.cs" />
     <Compile Include="script\parser\ParserTools.cs" />
+    <Compile Include="script\symbol\ArrayElements.cs" />
     <Compile Include="script\symbol\DesignationType.cs" />
     <Compile Include="script\parser\ParseExpression.cs" />
     <Compile Include="script\nodes\Node.cs" />

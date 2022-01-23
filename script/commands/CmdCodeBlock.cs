@@ -28,8 +28,7 @@ namespace Tilde.script.commands
         /// <param name="parser"></param>
         /// <returns></returns>
         public override Node Translate(Parser parser)
-        {
-
+        { 
             Token leftBrace = parser.GetToken();
 
             return (ParseCodeBlock(parser));

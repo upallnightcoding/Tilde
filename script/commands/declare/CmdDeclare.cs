@@ -1,5 +1,6 @@
 ﻿using Leo.script;
 using Leo.script.parser;
+using Leo.script.symbol;
 using System.Collections.Generic;
 using Tilde.script.nodes;
 using Tilde.script.parser;
@@ -45,14 +46,14 @@ namespace Tilde.script.commands.declare
 
                 variable = parser.GetToken();
 
-                ArrayElement arrayElement = parserTools.GetArrayElements(parser, out token);
+                ArrayElements arrayElements = parserTools.GetArrayElements(parser, out token);
 
                 if (token.IsAssign())
                 {
                     initialize = parserTools.GetExpression(parser, out token);
                 } 
                 
-                nodeDeclare.Add(new NodeDeclareVar(type, variable, arrayElement, initialize));
+                nodeDeclare.Add(new NodeDeclareVar(type, variable, arrayElements, initialize));
 
                 variable = token;
             }

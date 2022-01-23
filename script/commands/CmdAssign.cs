@@ -37,7 +37,7 @@ namespace Leo.script.commands
 
             NodeAssign nodeAssign = new NodeAssign(Variable);
 
-            nodeAssign.ArrayElements = parserTools.GetArrayElements(parser, out token);
+            nodeAssign.Elements = parserTools.GetArrayElements(parser, out token);
 
             nodeAssign.Add(parserTools.GetExpression(parser, out _));
 
