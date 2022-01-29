@@ -28,7 +28,7 @@ namespace Tilde.script.parser
         SUBTRACT,   // '-'
         ADD,        // '+'
 
-        POWER,        // '^'
+        POWER,      // '^'
         MOD,        // '%'
 
         // Logical Operator Types

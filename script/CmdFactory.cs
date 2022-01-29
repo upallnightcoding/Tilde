@@ -13,7 +13,7 @@ namespace Tilde.script
     /// is an assignment statement and the assignment command is return by 
     /// the GetCommand invoke.
     /// 
-    /// The command that are retuned by the command factory are reused.  Each
+    /// The commands that are retuned by the command factory are reused.  Each
     /// command must be self-contained and initialize itself before each use.
     /// Failure to do so will mean residual values wil be retained from one
     /// use to another.
@@ -39,19 +39,32 @@ namespace Tilde.script
             InstallCmd();
         }
 
+        /************************/
+        /*** Public Functions ***/
+        /************************/
+
+        /// <summary>
+        /// GetCommand() - 
+        /// </summary>
+        /// <param name="keyword"></param>
+        /// <returns></returns>
         public Cmd GetCommand(Token keyword)
         {
-            Cmd cmd = null;
+            Cmd command = null;
 
-            if (!commandMap.TryGetValue(keyword.GetKeyword().ToUpper(), out cmd))
+            if (!commandMap.TryGetValue(keyword.GetKeyword().ToUpper(), out command))
             {
                 assignCmd.Variable = keyword;
 
-                cmd = assignCmd;
+                command = assignCmd;
             }
 
-            return (cmd);
+            return (command);
         }
+
+        /*************************/
+        /*** Private Functions ***/
+        /*************************/
 
         /// <summary>
         /// InstallCmd() - Install all command objects into the command 

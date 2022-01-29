@@ -24,7 +24,7 @@ namespace Tilde
 
         static void TestParse()
         {
-            SourceCode source = TestCase.ArrayTest01();
+            SourceCode source = TestCase.TestLogical01();
 
             TildeScript tilde = new TildeScript(source);
 

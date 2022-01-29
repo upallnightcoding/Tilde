@@ -51,7 +51,7 @@ namespace Tilde.script.parser
                 {
                     token = PushVarStack(parser, token);
                 }
-                else if (token.IsOperator())
+                else if (token.IsBinaryOperator())
                 {
                     token = PushOperStack(parser, token, false);
                 }
@@ -148,7 +148,7 @@ namespace Tilde.script.parser
 
             Token oper = operStack.Pop();
 
-            varStack.Push(oper.CreateNodeOperator(lValue, rValue));
+            varStack.Push(oper.CreateOperNode(lValue, rValue));
         }
 
         /// <summary>

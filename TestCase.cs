@@ -33,6 +33,7 @@ namespace Tilde
             source.Add("    print \"b[3,0]  \", b[3,0] ;");
             source.Add("    print \"b[0,1]  \", b[0,1] ;");
             source.Add("    print \"b[2,2]  \", b[2,2] ;");
+            source.Add("    print 7 - 5 + 1;");
             source.Add("}");
 
             return (source);
@@ -68,16 +69,22 @@ namespace Tilde
             return (source);
         }
 
-        public static SourceCode Case02()
+        public static SourceCode TestLogical01()
         {
             SourceCode source = new SourceCode();
 
             source.Add("program test {");
             source.Add("    integer a = (1 + 2.2), b = 4.67 / 2.0, c = 3.01;");
             source.Add("    float x = (1 + 2.2), y = 4.67 / 2.0, z = 3.01;");
-            source.Add("    print 1 == 1, a == a;");
-            source.Add("    print a, \" \", b, \" \", c ;");
-            source.Add("    print x, \" \", y, \" \", z ;");
+            source.Add("    print 1 == 1, ' ', a == a, ' ', a == 1;");
+            source.Add("    print 1 < 10, ' ', a < a, ' ', 10 < 1;");
+            source.Add("    print 1 <= 10, ' ', a <= a, ' ', 10 <= 1;");
+            source.Add("    print 1 > 10, ' ', a > a, ' ', 10 > 1;");
+            source.Add("    print 1 >= 10, ' ', a >= a, ' ', 10 >= 1;");
+            source.Add("    print 1 != 10, ' ', a != a, ' ', 10 != 1;");
+            source.Add("    print 10 - 4, ' ', 4 - 10, ' ', 16.3 - 3, ' ', 16 - 5.5;");
+            source.Add("    print a, ` This is a back tick test: `, b, ``, c ;");
+            source.Add("    print `x: `, x, ` y: `, y, ` z: `, z ;");
             source.Add("}");
 
             return (source);

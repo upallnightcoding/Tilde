@@ -10,7 +10,8 @@ namespace Tilde.script.parser
     class Parser
     {
         private static readonly char FLOATING_POINT_MARK = '.';
-        private static readonly char STRING_INDICATOR = '\"';
+        private static readonly char DOUBLE_QUOTE = '\"';
+        private static readonly char BACK_TICK = '`';
         private static readonly char ZERO_CHAR = '0';
 
         // Reference to source code object
@@ -37,6 +38,10 @@ namespace Tilde.script.parser
         /*** Public Functions ***/
         /************************/
 
+        /// <summary>
+        /// GetToken() - 
+        /// </summary>
+        /// <returns></returns>
         public Token GetToken()
         {
             Token token = null;
@@ -57,9 +62,9 @@ namespace Tilde.script.parser
                 {
                     token = GetSimpleToken();
                 } 
-                else if (character == STRING_INDICATOR)
+                else if (IsString(character))
                 {
-                    token = GetString();
+                    token = GetString(character);
                 } 
                 else if (character == '\'')
                 {
@@ -252,13 +257,13 @@ namespace Tilde.script.parser
             return (token);
         }
 
-        private Token GetString()
+        private Token GetString(char stringStop)
         {
             StringBuilder value = new StringBuilder();
 
             char character = GetNextChar();
 
-            while (NotEoc() && (character != STRING_INDICATOR))
+            while (NotEoc() && (character != stringStop))
             {
                 value.Append(character);
 
@@ -414,6 +419,8 @@ namespace Tilde.script.parser
         private bool IsAlphaNumeric(char character) => char.IsLetterOrDigit(character);
 
         private bool NotEoc() => !source.Eoc();
+
+        private bool IsString(char character) => (character == DOUBLE_QUOTE) || (character == BACK_TICK);
 
     }
 }

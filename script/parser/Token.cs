@@ -2,6 +2,8 @@
 using System;
 using Leo.script.nodes;
 using Tilde.script.symbol;
+using Leo.script.nodes.oper;
+using Tilde.script.nodes.oper;
 
 namespace Tilde.script.parser
 {
@@ -140,14 +142,14 @@ namespace Tilde.script.parser
         }
 
         /// <summary>
-        /// CreateNodeOperator() - Based on the token type, a node is created to
+        /// CreateOperNode() - Based on the token type, a node is created to
         /// represent the action to be taken during execution.  This function 
         /// works for binary operators.  
         /// </summary>
         /// <param name="leftValue"></param>
         /// <param name="rightValue"></param>
         /// <returns></returns>
-        public Node CreateNodeOperator(Node leftValue, Node rightValue)
+        public Node CreateOperNode(Node leftValue, Node rightValue)
         {
             Node node = null;
 
@@ -167,6 +169,21 @@ namespace Tilde.script.parser
                     break;
                 case TokenType.EQ:
                     node = new NodeEQ(leftValue, rightValue);
+                    break;
+                case TokenType.NE:
+                    node = new NodeNE(leftValue, rightValue);
+                    break;
+                case TokenType.LT:
+                    node = new NodeLT(leftValue, rightValue);
+                    break;
+                case TokenType.GT:
+                    node = new NodeGT(leftValue, rightValue);
+                    break;
+                case TokenType.GE:
+                    node = new NodeGE(leftValue, rightValue);
+                    break;
+                case TokenType.LE:
+                    node = new NodeLE(leftValue, rightValue);
                     break;
             }
 
@@ -221,6 +238,11 @@ namespace Tilde.script.parser
             switch(type)
             {
                 case TokenType.EQ:
+                case TokenType.NE:
+                case TokenType.LT:
+                case TokenType.LE:
+                case TokenType.GT:
+                case TokenType.GE:
                     value = 30;
                     break;
                 case TokenType.MULTIPLY:
@@ -275,7 +297,7 @@ namespace Tilde.script.parser
         /// is not, a false is returned.
         /// </summary>
         /// <returns></returns>
-        public bool IsOperator()
+        public bool IsBinaryOperator()
         {
             bool value = false;
 
@@ -286,6 +308,11 @@ namespace Tilde.script.parser
                 case TokenType.SUBTRACT:
                 case TokenType.ADD:
                 case TokenType.EQ:
+                case TokenType.NE:
+                case TokenType.LT:
+                case TokenType.LE:
+                case TokenType.GT:
+                case TokenType.GE:
                     value = true;
                     break;
             }
@@ -313,24 +340,6 @@ namespace Tilde.script.parser
 
             return (value);
         }
-
-        public void Debug()  // TODO : This function should be deleted
-        {
-            switch(type)
-            {
-                case TokenType.FLOAT:
-                    Console.WriteLine($"Type: {type} Value: {fValue}");
-                    break;
-                case TokenType.INTEGER:
-                    Console.WriteLine($"Type: {type} Value: {iValue}");
-                    break;
-                case TokenType.STRING:
-                    Console.WriteLine($"Type: {type} Value: {sValue}");
-                    break;
-                case TokenType.FIELD_SEPARATOR:
-                    Console.WriteLine($"Type: {type}");
-                    break;
-            }
-        }
+       
     }
 }
